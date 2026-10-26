@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vladimir Estrada | Desarrollador Backend</title>
+<meta name="description" content="Portafolio de Vladimir Estrada, desarrollador backend en Barranquilla, Colombia. APIs y servicios en Java, JavaScript, PHP y Python, con MySQL y PostgreSQL. Disponible para trabajo remoto.">
+<link rel="canonical" href="https://bladimirjr.github.io/Personal_Portafolio/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_CO">
+<meta property="og:title" content="Vladimir Estrada | Desarrollador Backend">
+<meta property="og:description" content="Portafolio de Vladimir Estrada, desarrollador backend en Barranquilla, Colombia. APIs y servicios en Java, JavaScript, PHP y Python, con MySQL y PostgreSQL. Disponible para trabajo remoto.">
+<meta property="og:url" content="https://bladimirjr.github.io/Personal_Portafolio/">
+<meta property="og:image" content="https://bladimirjr.github.io/Personal_Portafolio/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400..800&family=Manrope:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Concepto: un portafolio que se lee como una API. Tarjetas tipo bento sobre una aurora de colores de Carnaval,
+   rutas /stack /experiencia como navegación, logos reales de cada tecnología y una impresora 3D que construye capas. */
+:root{
+  /* oscuro primero */
+  --bg:#07141B; --bg-2:#0C1F29; --fg:#E8F3F2; --muted:#93AEB2; --line:rgba(170,225,220,.15);
+  --card:rgba(12,30,38,.68); --card-solid:#0E2630; --tile:rgba(255,255,255,.05);
+  --a1:#2BDCC8; --a2:#FF5E9C; --a3:#FFC83D; --on-a:#06161B;
+  --spot:rgba(43,220,200,.15); --spot-line:rgba(43,220,200,.7);
+  --blob1:rgba(43,220,200,.30); --blob2:rgba(255,94,156,.24); --blob3:rgba(255,200,61,.15);
+  --grain:.08; --shadow:0 24px 60px -30px rgba(0,0,0,.8); --lift:brightness(1.55) saturate(1.1);
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --bg:#EDF4F2; --bg-2:#E0ECE9; --fg:#0A2229; --muted:#47666C; --line:rgba(10,34,41,.15);
+    --card:rgba(255,255,255,.72); --card-solid:#FFFFFF; --tile:rgba(10,34,41,.045);
+    --a1:#06756D; --a2:#C8135A; --a3:#955D00; --on-a:#FFFFFF;
+    --spot:rgba(6,117,109,.12); --spot-line:rgba(6,117,109,.55);
+    --blob1:rgba(43,220,200,.50); --blob2:rgba(255,94,156,.32); --blob3:rgba(255,200,61,.45);
+    --grain:.05; --shadow:0 24px 50px -32px rgba(10,34,41,.45); --lift:none;
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#EDF4F2; --bg-2:#E0ECE9; --fg:#0A2229; --muted:#47666C; --line:rgba(10,34,41,.15);
+  --card:rgba(255,255,255,.72); --card-solid:#FFFFFF; --tile:rgba(10,34,41,.045);
+  --a1:#06756D; --a2:#C8135A; --a3:#955D00; --on-a:#FFFFFF;
+  --spot:rgba(6,117,109,.12); --spot-line:rgba(6,117,109,.55);
+  --blob1:rgba(43,220,200,.50); --blob2:rgba(255,94,156,.32); --blob3:rgba(255,200,61,.45);
+  --grain:.05; --shadow:0 24px 50px -32px rgba(10,34,41,.45); --lift:none;
+  color-scheme:light;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{
+  background:var(--bg); color:var(--fg); font:400 1rem/1.6 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0; overflow-x:hidden; position:relative;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+h1,h2,h3,p,ul,ol,dl,dd,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+a{color:inherit}
+svg{display:block}
+:focus-visible{outline:2px solid var(--a1);outline-offset:3px;border-radius:6px}
+.mono{font-family:var(--mono)}
+.muted{color:var(--muted)}
+
+/* ---------- fondo ---------- */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.blob{position:absolute;width:70vmax;height:70vmax;border-radius:50%;will-change:transform}
+.b1{left:-18vmax;top:-26vmax;background:radial-gradient(circle,var(--blob1),transparent 62%);animation:drift1 26s ease-in-out infinite alternate}
+.b2{right:-24vmax;top:6vmax;background:radial-gradient(circle,var(--blob2),transparent 62%);animation:drift2 32s ease-in-out infinite alternate}
+.b3{left:20vmax;bottom:-40vmax;background:radial-gradient(circle,var(--blob3),transparent 62%);animation:drift1 38s ease-in-out infinite alternate-reverse}
+.dots{position:absolute;inset:0;background-image:radial-gradient(circle,var(--line) 1px,transparent 1.4px);background-size:30px 30px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 18%,#000,transparent 75%);mask-image:radial-gradient(ellipse 80% 60% at 50% 18%,#000,transparent 75%)}
+.grain{position:absolute;inset:0;opacity:var(--grain);mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+@keyframes drift1{to{transform:translate3d(10vmax,8vmax,0) scale(1.15)}}
+@keyframes drift2{to{transform:translate3d(-12vmax,10vmax,0) scale(.92)}}
+
+/* ---------- navegación ---------- */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));
+  padding-inline:max(16px,env(safe-area-inset-left,0px));
+  background:var(--bg-2);background:color-mix(in srgb,var(--bg) 78%,transparent);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1180px;margin:0 auto;height:58px;display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:600 .86rem var(--display);letter-spacing:.01em;white-space:nowrap}
+.brand b{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;font:700 .72rem var(--display);color:var(--on-a);
+  background:linear-gradient(135deg,var(--a1),var(--a2))}
+.links{margin-left:auto;display:flex;gap:4px}
+.links a{font:500 .8rem var(--mono);text-decoration:none;color:var(--muted);padding:8px 11px;border-radius:8px;transition:color .2s,background .2s}
+.links a:hover{color:var(--fg);background:var(--tile)}
+.progress{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,var(--a1),var(--a2),var(--a3));transform-origin:left;transform:scaleX(var(--p,0))}
+
+/* ---------- piezas ---------- */
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding-block:26px 40px}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px}
+.s3,.s3t{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
+
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;overflow:hidden;min-width:0;
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:var(--shadow)}
+.card::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .35s;
+  background:radial-gradient(460px circle at var(--mx,50%) var(--my,0%),var(--spot),transparent 62%)}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;opacity:0;transition:opacity .35s;
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),var(--spot-line),transparent 70%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.card:hover::before,.card:hover::after{opacity:1}
+
+.pill{display:inline-flex;align-items:center;gap:9px;font:500 .78rem var(--mono);padding:7px 13px 7px 11px;border-radius:99px;
+  border:1px solid var(--line);background:var(--tile)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--a1);box-shadow:0 0 0 0 var(--a1);animation:ping 2.2s ease-out infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--a1) 60%,transparent)}80%,100%{box-shadow:0 0 0 9px transparent}}
+
+.btn{display:inline-flex;align-items:center;gap:9px;font:600 .92rem var(--body);text-decoration:none;cursor:pointer;
+  padding:12px 20px;border-radius:12px;border:1px solid transparent;background:var(--a1);color:var(--on-a);
+  transition:transform .2s,box-shadow .2s,background .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 26px -10px var(--a1)}
+.btn.ghost{background:var(--tile);color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{box-shadow:0 10px 26px -14px var(--fg)}
+.btn .ic,.btn .gl{width:1.15em;height:1.15em}
+
+.ic{width:1em;height:1em;flex:none;display:block}
+.ic.lift{filter:var(--lift)}
+.gl{width:1em;height:1em;flex:none;display:block;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+.ep{font:500 .8rem var(--mono);letter-spacing:.06em;color:var(--a1);margin-bottom:10px}
+.ep i{font-style:normal;color:var(--muted);margin-right:.5em}
+.sec{margin-top:78px;scroll-margin-top:76px}
+.sec-head{margin-bottom:22px;max-width:60ch}
+.sec-head h2{font:600 clamp(1.5rem,3.6vw,2.35rem)/1.12 var(--display);text-wrap:balance;letter-spacing:-.01em}
+.sec-head p{margin-top:12px;color:var(--muted)}
+
+/* ---------- hero ---------- */
+.hero-grid .hero{grid-column:1 / span 8;grid-row:1}
+.hero-grid .photo{grid-column:9 / span 4;grid-row:1}
+.hero-grid .clock{grid-column:1 / span 6;grid-row:2}
+.hero-grid .years{grid-column:7 / span 6;grid-row:2}
+.hero{padding:clamp(22px,4vw,42px);display:flex;flex-direction:column;gap:20px;border-radius:30px}
+.hero-top{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;justify-content:space-between}
+.eyebrow{font:500 .84rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(2.4rem,8.6vw,4.7rem)/1.02 var(--display);letter-spacing:-.025em;overflow-wrap:anywhere}
+.grad{background:linear-gradient(100deg,var(--a1),var(--a2),var(--a3),var(--a1));background-size:300% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:sheen 9s linear infinite}
+@keyframes sheen{to{background-position:-300% 0}}
+.lede{max-width:52ch;font-size:clamp(1rem,1.9vw,1.14rem);color:var(--muted)}
+.lede b{color:var(--fg);font-weight:600}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px}
+.hero > *{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+.hero > :nth-child(2){animation-delay:.08s}.hero > :nth-child(3){animation-delay:.16s}.hero > :nth-child(4){animation-delay:.26s}.hero > :nth-child(5){animation-delay:.34s}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}
+
+.clock,.years{display:flex;flex-direction:column;justify-content:space-between;gap:14px}
+.k{font:500 .76rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.time{font:500 clamp(1.9rem,4vw,2.6rem)/1 var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.time span{color:var(--a1);animation:blink 1s steps(2,start) infinite}
+@keyframes blink{50%{opacity:.25}}
+.sub{font-size:.88rem;color:var(--muted)}
+.big{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;font:700 clamp(2.6rem,5vw,3.5rem)/1 var(--display);letter-spacing:-.03em}
+.big small{font:500 .95rem var(--body);letter-spacing:0;color:var(--muted);margin-right:6px}
+
+/* foto y órbita */
+.photo{display:flex;flex-direction:column;justify-content:space-between;align-items:center;gap:8px;padding:18px 18px 20px;perspective:900px;border-radius:30px}
+.cap{font:500 .74rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center}
+.orbit{position:relative;width:100%;aspect-ratio:1;margin-block:auto;container-type:inline-size;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .25s ease-out}
+.ring{position:absolute;left:50%;top:50%;width:calc(var(--r)*2);height:calc(var(--r)*2);margin:calc(var(--r)*-1) 0 0 calc(var(--r)*-1);
+  border:1px dashed var(--line);border-radius:50%;animation:spin var(--t) linear infinite}
+.ring.rev,.ring.rev .sat-in{animation-direction:reverse}
+.sat{position:absolute;left:50%;top:50%;width:var(--s);height:var(--s);margin:calc(var(--s)/-2) 0 0 calc(var(--s)/-2);transform:rotate(var(--a)) translateX(var(--r))}
+.sat-in{width:100%;height:100%;display:grid;place-items:center;border-radius:30%;background:var(--card-solid);border:1px solid var(--line);
+  box-shadow:0 8px 20px -10px rgba(0,0,0,.6);animation:counter var(--t) linear infinite;font-size:var(--s)}
+.sat-in .ic{width:62%;height:62%}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes counter{from{transform:rotate(calc(var(--a) * -1))}to{transform:rotate(calc(var(--a) * -1 - 360deg))}}
+.fw{position:absolute;left:50%;top:50%;width:38cqw;height:38cqw;margin:-19cqw 0 0 -19cqw;border-radius:50%;padding:3px;
+  background:conic-gradient(from 0deg,var(--a1),var(--a2),var(--a3),var(--a1));animation:spin 9s linear infinite;
+  box-shadow:0 0 50px -8px var(--a1)}
+.frame{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:var(--bg-2);animation:spin 9s linear infinite reverse}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none}
+.ve{font:700 10.5cqw/1 var(--display);letter-spacing:-.04em;background:linear-gradient(135deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+
+/* ---------- marquee ---------- */
+.mq{margin-top:18px;display:grid;gap:12px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);overflow:hidden}
+.mq-track{display:flex;width:max-content;animation:slide 46s linear infinite}
+.mq-track.rev{animation-direction:reverse;animation-duration:54s}
+.mq:hover .mq-track{animation-play-state:paused}
+.mq-item{display:flex;align-items:center;gap:12px;margin-right:14px;padding:11px 20px 11px 14px;border-radius:99px;border:1px solid var(--line);background:var(--card);
+  font:600 .95rem var(--display);letter-spacing:-.01em;white-space:nowrap}
+.mq-item .ic{width:28px;height:28px}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* ---------- stack: fichas ---------- */
+.tile{display:flex;flex-direction:column;gap:6px;min-height:176px;padding:18px;transition:transform .25s,border-color .25s}
+.tile:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--c) 55%,var(--line))}
+.tile .glow{position:absolute;left:-20%;right:-20%;top:-60%;height:90%;background:radial-gradient(closest-side,var(--c),transparent);opacity:.0;transition:opacity .35s;pointer-events:none}
+.tile:hover .glow{opacity:.28}
+.tile-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:auto;position:relative}
+.tile .ic{width:48px;height:48px;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.tile:hover .ic{transform:scale(1.14) rotate(-6deg)}
+.since{font:500 .72rem var(--mono);color:var(--muted);letter-spacing:.05em;padding:4px 9px;border-radius:99px;border:1px solid var(--line);background:var(--tile);white-space:nowrap}
+.tile h3{font:600 1.12rem var(--display);margin-top:16px;position:relative}
+.tile p{font-size:.88rem;color:var(--muted);position:relative}
+
+/* ---------- línea de tiempo a escala ---------- */
+.tl-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;align-items:baseline;margin-bottom:18px}
+.tl-head h3{font:600 1.15rem var(--display)}
+.legend{font:500 .74rem var(--mono);color:var(--muted);display:flex;align-items:center;gap:8px}
+.axis,.trow{display:grid;grid-template-columns:196px minmax(0,1fr) 92px;gap:14px;align-items:center}
+.axis{margin-bottom:8px}
+.years-axis{position:relative;height:18px}
+.years-axis span{position:absolute;top:0;font:500 .72rem var(--mono);color:var(--muted);transform:translateX(0)}
+.trow{padding-block:9px;border-top:1px solid var(--line)}
+.tname{display:flex;align-items:center;gap:9px;font:600 .88rem var(--body);min-width:0}
+.tname .ic{width:24px;height:24px}
+.tname .ic + .ic{margin-left:-4px}
+.ttrack{position:relative;height:16px;
+  background:
+   linear-gradient(var(--line),var(--line)) 0% 0/1px 100% no-repeat,
+   linear-gradient(var(--line),var(--line)) 21.05% 0/1px 100% no-repeat,
+   linear-gradient(var(--line),var(--line)) 42.1% 0/1px 100% no-repeat,
+   linear-gradient(var(--line),var(--line)) 63.16% 0/1px 100% no-repeat,
+   linear-gradient(var(--line),var(--line)) 84.2% 0/1px 100% no-repeat}
+.bar{position:absolute;top:1px;height:14px;border-radius:99px;background:linear-gradient(90deg,color-mix(in srgb,var(--c) 70%,transparent),var(--c));
+  box-shadow:0 0 22px -4px var(--c);transform-origin:left;animation:grow 1.3s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * .1s + .2s)}
+.bar.on::after{content:"";position:absolute;right:-1px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--fg);
+  box-shadow:0 0 0 0 var(--fg);animation:ping2 2.2s ease-out infinite}
+@keyframes ping2{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--fg) 55%,transparent)}80%,100%{box-shadow:0 0 0 8px transparent}}
+@keyframes grow{from{transform:scaleX(0)}}
+.tdur{font:500 .76rem var(--mono);color:var(--muted);text-align:right;white-space:nowrap}
+.note{margin-top:14px;font-size:.82rem;color:var(--muted)}
+
+/* ---------- tarjeta API ---------- */
+.api{display:flex;flex-direction:column;gap:14px;font-family:var(--mono);font-size:.82rem;line-height:1.75}
+.req{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.m-get{font-weight:500;font-size:.72rem;letter-spacing:.08em;padding:3px 9px;border-radius:6px;background:color-mix(in srgb,var(--a1) 22%,transparent);color:var(--a1)}
+.ok{margin-left:auto;font-size:.74rem;color:var(--a1)}
+.json{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--muted)}
+.json .ln{display:block;animation:typein .5s ease-out both;animation-delay:calc(var(--n) * .11s + .4s)}
+.json .k2{color:var(--a1)}.json .s2{color:var(--a3)}.json .jv{color:var(--a2)}
+.json .cur{display:inline-block;width:.55em;height:1.05em;vertical-align:-.18em;background:var(--a1);animation:blink 1s steps(2,start) infinite}
+@keyframes typein{from{opacity:0;transform:translateX(-8px)}}
+
+/* ---------- qué hago ---------- */
+.do{display:flex;flex-direction:column;gap:12px}
+.do .ico{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--tile);border:1px solid var(--line);font-size:24px;color:var(--a1)}
+.do .ico .ic,.do .ico .gl{width:26px;height:26px}
+.do h3{font:600 1.02rem var(--display)}
+.do p{font-size:.92rem;color:var(--muted)}
+
+/* ---------- experiencia ---------- */
+.job{display:flex;flex-direction:column;gap:14px}
+.job-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 12px}
+.period{font:500 .76rem var(--mono);display:inline-flex;align-items:center;gap:8px;color:var(--muted)}
+.job h3{font:600 1.18rem/1.25 var(--display);text-wrap:balance}
+.co{color:var(--a1);font-weight:600;font-size:.95rem}
+.ticks li{position:relative;padding-left:20px;color:var(--muted);font-size:.95rem}
+.ticks li + li{margin-top:7px}
+.ticks li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;transform:rotate(45deg);background:linear-gradient(135deg,var(--a1),var(--a2))}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:4px}
+.chip{display:inline-flex;align-items:center;gap:7px;font:500 .78rem var(--body);padding:5px 12px 5px 8px;border-radius:99px;border:1px solid var(--line);background:var(--tile)}
+.chip .ic{width:17px;height:17px}
+
+/* ---------- proyectos ---------- */
+.print{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:22px;align-items:center}
+.print h3{font:700 clamp(1.5rem,3vw,2rem)/1.1 var(--display);letter-spacing:-.02em}
+.badge-row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 14px}
+.badge{font:500 .74rem var(--mono);padding:4px 10px;border-radius:99px;border:1px solid var(--line);background:var(--tile)}
+.badge.live{color:var(--a3);border-color:color-mix(in srgb,var(--a3) 45%,transparent)}
+.print p.lead{color:var(--muted)}
+.print .ticks{margin-top:14px}
+.print-cta{margin-top:20px}
+.printer{width:100%;height:auto;max-height:360px}
+.printer .rail{stroke:var(--line);stroke-width:2;fill:none}
+.printer .bed{fill:var(--fg);opacity:.9}
+.printer .base{fill:var(--line)}
+.printer .axisx{fill:var(--muted)}
+.printer .nozzle{fill:var(--fg)}
+.printer .tip{fill:var(--a3)}
+.ly{fill:url(#lg);transform-box:fill-box;transform-origin:center}
+.head{animation:sweep 2.1s ease-in-out infinite alternate}
+@keyframes sweep{from{transform:translateX(-44px)}to{transform:translateX(44px)}}
+@keyframes l0{0%,4.00%{opacity:0;transform:scaleX(.35)}5.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l0{animation:l0 10.0s linear infinite -4.2s}
+@keyframes l1{0%,7.00%{opacity:0;transform:scaleX(.35)}8.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l1{animation:l1 10.0s linear infinite -4.2s}
+@keyframes l2{0%,10.00%{opacity:0;transform:scaleX(.35)}11.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l2{animation:l2 10.0s linear infinite -4.2s}
+@keyframes l3{0%,13.00%{opacity:0;transform:scaleX(.35)}14.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l3{animation:l3 10.0s linear infinite -4.2s}
+@keyframes l4{0%,16.00%{opacity:0;transform:scaleX(.35)}17.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l4{animation:l4 10.0s linear infinite -4.2s}
+@keyframes l5{0%,19.00%{opacity:0;transform:scaleX(.35)}20.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l5{animation:l5 10.0s linear infinite -4.2s}
+@keyframes l6{0%,22.00%{opacity:0;transform:scaleX(.35)}23.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l6{animation:l6 10.0s linear infinite -4.2s}
+@keyframes l7{0%,25.00%{opacity:0;transform:scaleX(.35)}26.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l7{animation:l7 10.0s linear infinite -4.2s}
+@keyframes l8{0%,28.00%{opacity:0;transform:scaleX(.35)}29.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l8{animation:l8 10.0s linear infinite -4.2s}
+@keyframes l9{0%,31.00%{opacity:0;transform:scaleX(.35)}32.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l9{animation:l9 10.0s linear infinite -4.2s}
+@keyframes l10{0%,34.00%{opacity:0;transform:scaleX(.35)}35.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l10{animation:l10 10.0s linear infinite -4.2s}
+@keyframes l11{0%,37.00%{opacity:0;transform:scaleX(.35)}38.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l11{animation:l11 10.0s linear infinite -4.2s}
+@keyframes l12{0%,40.00%{opacity:0;transform:scaleX(.35)}41.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l12{animation:l12 10.0s linear infinite -4.2s}
+@keyframes l13{0%,43.00%{opacity:0;transform:scaleX(.35)}44.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l13{animation:l13 10.0s linear infinite -4.2s}
+@keyframes l14{0%,46.00%{opacity:0;transform:scaleX(.35)}47.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l14{animation:l14 10.0s linear infinite -4.2s}
+@keyframes l15{0%,49.00%{opacity:0;transform:scaleX(.35)}50.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l15{animation:l15 10.0s linear infinite -4.2s}
+@keyframes l16{0%,52.00%{opacity:0;transform:scaleX(.35)}53.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l16{animation:l16 10.0s linear infinite -4.2s}
+@keyframes l17{0%,55.00%{opacity:0;transform:scaleX(.35)}56.60%,86.00%{opacity:1;transform:scaleX(1)}89.50%,100%{opacity:0;transform:scaleX(1)}}.l17{animation:l17 10.0s linear infinite -4.2s}
+@keyframes rise{0%{transform:translateY(0)}58.00%{transform:translateY(-122.4px)}86.00%{transform:translateY(-122.4px)}89.50%,100%{transform:translateY(0)}}.gantry{animation:rise 10.0s linear infinite -4.2s}@media (prefers-reduced-motion:reduce){.gantry{transform:translateY(-122.4px)}}
+.priv{display:flex;flex-direction:column;justify-content:center;gap:16px}
+.priv-head{display:flex;align-items:center;gap:16px}
+.priv .num{font:700 clamp(4rem,7vw,5.2rem)/.95 var(--display);letter-spacing:-.05em;flex:none}
+.priv-txt{display:flex;flex-direction:column;gap:6px;min-width:0}
+.priv h3{font:600 1.1rem/1.2 var(--display)}
+.repos{display:grid;gap:9px}
+.repos li{display:grid;grid-template-columns:auto minmax(0,1fr) 64px;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--tile)}
+.repos .gl{width:16px;height:16px;color:var(--muted)}
+.redact{display:block;height:8px;width:var(--w);border-radius:99px;
+  background:linear-gradient(90deg,var(--line) 0%,color-mix(in srgb,var(--muted) 65%,transparent) 50%,var(--line) 100%);background-size:240% 100%;
+  animation:shimmer 2.4s linear infinite;animation-delay:var(--d)}
+@keyframes shimmer{from{background-position:120% 0}to{background-position:-120% 0}}
+.prog{position:relative;height:4px;border-radius:99px;background:var(--line);overflow:hidden}
+.prog i{position:absolute;inset:0 auto 0 0;width:42%;border-radius:inherit;background:linear-gradient(90deg,var(--a1),var(--a3));animation:run var(--sp) ease-in-out infinite;animation-delay:var(--d)}
+@keyframes run{from{transform:translateX(-110%)}to{transform:translateX(250%)}}
+.repos li.done{border-color:color-mix(in srgb,var(--a1) 40%,var(--line))}
+.repos li.done .gl{color:var(--a1);stroke-width:2.4;animation:pop .8s .5s cubic-bezier(.2,.9,.3,1.3) both}
+.repos li.done .redact{animation:none;background:color-mix(in srgb,var(--a1) 38%,var(--line))}
+.prog.full i{width:100%;animation:none;box-shadow:0 0 12px -2px var(--a1)}
+@keyframes pop{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}
+.badge.done{color:var(--a1);border-color:color-mix(in srgb,var(--a1) 45%,transparent)}
+
+/* ---------- formación e idiomas ---------- */
+.edu{display:flex;flex-direction:column;gap:10px}
+.edu.study{justify-content:space-between}
+.edu h3{font:600 1.18rem/1.25 var(--display)}
+.cefr{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin-top:6px}
+.cefr span{text-align:center;font:500 .76rem var(--mono);padding:9px 0;border-radius:9px;border:1px solid var(--line);color:var(--muted);background:var(--tile)}
+.cefr span.me{color:var(--on-a);background:var(--a1);border-color:transparent;font-weight:500;box-shadow:0 8px 22px -10px var(--a1)}
+.lang{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.lang b{font:600 1rem var(--display)}
+.meter{height:8px;border-radius:99px;background:var(--tile);border:1px solid var(--line);overflow:hidden;margin-top:6px}
+.meter i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--a1),var(--a3));transform-origin:left;animation:grow 1.2s .3s cubic-bezier(.2,.8,.2,1) both}
+
+/* ---------- contacto ---------- */
+.contact{padding:clamp(24px,5vw,54px);border-radius:32px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:28px;align-items:center}
+.contact h2{font:700 clamp(2rem,6vw,3.6rem)/1.02 var(--display);letter-spacing:-.025em}
+.contact p{margin-top:14px;color:var(--muted);max-width:44ch}
+.mail{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 12px 12px 16px;border-radius:14px;border:1px solid var(--line);background:var(--tile)}
+.mail code{font:500 .94rem var(--mono);overflow-wrap:anywhere;min-width:0;flex:1 1 200px;user-select:all}
+.mail .btn{padding:9px 14px;font-size:.84rem}
+.side{display:flex;flex-direction:column;gap:12px}
+.side .btn{justify-content:center}
+.status{font:500 .78rem var(--mono);color:var(--muted);min-height:1.4em}
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px;font:500 .78rem var(--mono);color:var(--muted)}
+
+/* ---------- responsive ---------- */
+@media (max-width:1020px){
+  .hero-grid .hero,.hero-grid .photo,.hero-grid .clock,.hero-grid .years{grid-column:auto;grid-row:auto}
+  .grid{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .hero-grid .hero,.hero-grid .photo{grid-column:span 6}
+  .hero-grid .clock,.hero-grid .years{grid-column:span 3}
+  .photo{max-width:100%}
+  .orbit{max-width:420px}
+  .s3,.s3t{grid-column:span 3}.s4,.s5,.s6,.s7,.s8,.s12{grid-column:span 6}
+  .links a:nth-child(n+3){display:none}
+}
+@media (max-width:760px){
+  .axis,.trow{grid-template-columns:minmax(0,1fr) auto;gap:6px 12px}
+  .axis > :first-child,.axis > :last-child{display:none}
+  .axis .years-axis{grid-column:1 / -1}
+  .trow .ttrack{grid-column:1 / -1;grid-row:2}
+  .tdur{grid-row:1;grid-column:2}
+  .print,.contact{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:620px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero-grid .hero,.hero-grid .photo,.s5,.s6,.s7,.s8,.s12,.s3t,.s4{grid-column:span 2}
+  .s3{grid-column:span 1}
+  .hero-grid .clock,.hero-grid .years{grid-column:span 2}
+  .card{padding:18px;border-radius:20px}
+  .tile{min-height:150px;padding:14px}
+  .tile .ic{width:40px;height:40px}
+  .tile h3{font-size:1rem}
+  .since{display:none}
+  .do{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;align-items:start}
+  .do .ico{grid-row:span 2}
+  .links{display:none}
+  .sec{margin-top:60px}
+  .nav-in{height:54px}
+  .brand span{display:none}
+  .nav-in .btn{margin-left:auto}
+}
+@media (min-width:621px){.nav-in .btn{display:none}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .mq{overflow-x:auto}
+  .grad{background-size:100% 100%}
+}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-java" viewBox="0 0 128 128"><path fill="#0074BD" d="M47.617 98.12s-4.767 2.774 3.397 3.71c9.892 1.13 14.947.968 25.845-1.092 0 0 2.871 1.795 6.873 3.351-24.439 10.47-55.308-.607-36.115-5.969zm-2.988-13.665s-5.348 3.959 2.823 4.805c10.567 1.091 18.91 1.18 33.354-1.6 0 0 1.993 2.025 5.132 3.131-29.542 8.64-62.446.68-41.309-6.336z"/><path fill="#EA2D2E" d="M69.802 61.271c6.025 6.935-1.58 13.17-1.58 13.17s15.289-7.891 8.269-17.777c-6.559-9.215-11.587-13.792 15.635-29.58 0 .001-42.731 10.67-22.324 34.187z"/><path fill="#0074BD" d="M102.123 108.229s3.529 2.91-3.888 5.159c-14.102 4.272-58.706 5.56-71.094.171-4.451-1.938 3.899-4.625 6.526-5.192 2.739-.593 4.303-.485 4.303-.485-4.953-3.487-32.013 6.85-13.743 9.815 49.821 8.076 90.817-3.637 77.896-9.468zM49.912 70.294s-22.686 5.389-8.033 7.348c6.188.828 18.518.638 30.011-.326 9.39-.789 18.813-2.474 18.813-2.474s-3.308 1.419-5.704 3.053c-23.042 6.061-67.544 3.238-54.731-2.958 10.832-5.239 19.644-4.643 19.644-4.643zm40.697 22.747c23.421-12.167 12.591-23.86 5.032-22.285-1.848.385-2.677.72-2.677.72s.688-1.079 2-1.543c14.953-5.255 26.451 15.503-4.823 23.725 0-.002.359-.327.468-.617z"/><path fill="#EA2D2E" d="M76.491 1.587S89.459 14.563 64.188 34.51c-20.266 16.006-4.621 25.13-.007 35.559-11.831-10.673-20.509-20.07-14.688-28.815C58.041 28.42 81.722 22.195 76.491 1.587z"/><path fill="#0074BD" d="M52.214 126.021c22.476 1.437 57-.8 57.817-11.436 0 0-1.571 4.032-18.577 7.231-19.186 3.612-42.854 3.191-56.887.874 0 .001 2.875 2.381 17.647 3.331z"/></symbol><symbol id="i-javascript" viewBox="0 0 128 128"><path fill="#F0DB4F" d="M1.408 1.408h125.184v125.185H1.408z"/><path fill="#323330" d="M116.347 96.736c-.917-5.711-4.641-10.508-15.672-14.981-3.832-1.761-8.104-3.022-9.377-5.926-.452-1.69-.512-2.642-.226-3.665.821-3.32 4.784-4.355 7.925-3.403 2.023.678 3.938 2.237 5.093 4.724 5.402-3.498 5.391-3.475 9.163-5.879-1.381-2.141-2.118-3.129-3.022-4.045-3.249-3.629-7.676-5.498-14.756-5.355l-3.688.477c-3.534.893-6.902 2.748-8.877 5.235-5.926 6.724-4.236 18.492 2.975 23.335 7.104 5.332 17.54 6.545 18.873 11.531 1.297 6.104-4.486 8.08-10.234 7.378-4.236-.881-6.592-3.034-9.139-6.949-4.688 2.713-4.688 2.713-9.508 5.485 1.143 2.499 2.344 3.63 4.26 5.795 9.068 9.198 31.76 8.746 35.83-5.176.165-.478 1.261-3.666.38-8.581zM69.462 58.943H57.753l-.048 30.272c0 6.438.333 12.34-.714 14.149-1.713 3.558-6.152 3.117-8.175 2.427-2.059-1.012-3.106-2.451-4.319-4.485-.333-.584-.583-1.036-.667-1.071l-9.52 5.83c1.583 3.249 3.915 6.069 6.902 7.901 4.462 2.678 10.459 3.499 16.731 2.059 4.082-1.189 7.604-3.652 9.448-7.401 2.666-4.915 2.094-10.864 2.07-17.444.06-10.735.001-21.468.001-32.237z"/></symbol><symbol id="i-nodejs" viewBox="0 0 128 128"><path fill="url(#nodejs-a)" d="M66.958.825a6.07 6.07 0 0 0-6.035 0L11.103 29.76c-1.895 1.072-2.96 3.095-2.96 5.24v57.988c0 2.143 1.183 4.167 2.958 5.24l49.82 28.934a6.07 6.07 0 0 0 6.036 0l49.82-28.935c1.894-1.072 2.958-3.096 2.958-5.24V35c0-2.144-1.183-4.167-2.958-5.24z"/><path fill="url(#nodejs-b)" d="M116.897 29.76 66.841.825A8.161 8.161 0 0 0 65.302.23L9.21 96.798a6.251 6.251 0 0 0 1.657 1.43l50.057 28.934c1.42.833 3.076 1.072 4.615.595l52.66-96.925a3.702 3.702 0 0 0-1.302-1.072z"/><path fill="url(#nodejs-c)" d="M116.898 98.225c1.42-.833 2.485-2.262 2.958-3.81L65.066.108c-1.42-.238-2.959-.119-4.26.715L11.104 29.639l53.606 98.355c.71-.12 1.54-.358 2.25-.715z"/><defs><linearGradient id="nodejs-a" x1="34.513" x2="27.157" y1="15.535" y2="30.448" gradientTransform="translate(-129.242 -73.715) scale(6.18523)" gradientUnits="userSpaceOnUse"><stop stop-color="#3F873F"/><stop offset=".33" stop-color="#3F8B3D"/><stop offset=".637" stop-color="#3E9638"/><stop offset=".934" stop-color="#3DA92E"/><stop offset="1" stop-color="#3DAE2B"/></linearGradient><linearGradient id="nodejs-b" x1="30.009" x2="50.533" y1="23.359" y2="8.288" gradientTransform="translate(-129.242 -73.715) scale(6.18523)" gradientUnits="userSpaceOnUse"><stop offset=".138" stop-color="#3F873F"/><stop offset=".402" stop-color="#52A044"/><stop offset=".713" stop-color="#64B749"/><stop offset=".908" stop-color="#6ABF4B"/></linearGradient><linearGradient id="nodejs-c" x1="21.917" x2="40.555" y1="22.261" y2="22.261" gradientTransform="translate(-129.242 -73.715) scale(6.18523)" gradientUnits="userSpaceOnUse"><stop offset=".092" stop-color="#6ABF4B"/><stop offset=".287" stop-color="#64B749"/><stop offset=".598" stop-color="#52A044"/><stop offset=".862" stop-color="#3F873F"/></linearGradient></defs></symbol><symbol id="i-python" viewBox="0 0 128 128"><linearGradient id="python-python-original-a" gradientUnits="userSpaceOnUse" x1="70.252" y1="1237.476" x2="170.659" y2="1151.089" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)"><stop offset="0" stop-color="#5A9FD4"/><stop offset="1" stop-color="#306998"/></linearGradient><linearGradient id="python-python-original-b" gradientUnits="userSpaceOnUse" x1="209.474" y1="1098.811" x2="173.62" y2="1149.537" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)"><stop offset="0" stop-color="#FFD43B"/><stop offset="1" stop-color="#FFE873"/></linearGradient><path fill="url(#python-python-original-a)" d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.866-1.008zM50.037 9.557c2.55 0 4.634 2.117 4.634 4.721 0 2.593-2.083 4.69-4.634 4.69-2.56 0-4.633-2.097-4.633-4.69-.001-2.604 2.073-4.721 4.633-4.721z" transform="translate(0 10.26)"/><path fill="url(#python-python-original-b)" d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268zM77.809 87.927c2.561 0 4.634 2.097 4.634 4.692 0 2.602-2.074 4.719-4.634 4.719-2.55 0-4.633-2.117-4.633-4.719 0-2.595 2.083-4.692 4.633-4.692z" transform="translate(0 10.26)"/><radialGradient id="python-python-original-c" cx="1825.678" cy="444.45" r="26.743" gradientTransform="matrix(0 -.24 -1.055 0 532.979 557.576)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#B8B8B8" stop-opacity=".498"/><stop offset="1" stop-color="#7F7F7F" stop-opacity="0"/></radialGradient><path opacity=".444" fill="url(#python-python-original-c)" d="M97.309 119.597c0 3.543-14.816 6.416-33.091 6.416-18.276 0-33.092-2.873-33.092-6.416 0-3.544 14.815-6.417 33.092-6.417 18.275 0 33.091 2.872 33.091 6.417z"/></symbol><symbol id="i-php" viewBox="0 0 128 128"><path fill="url(#php-a)" d="M0 64c0 18.593 28.654 33.667 64 33.667 35.346 0 64-15.074 64-33.667 0-18.593-28.655-33.667-64-33.667C28.654 30.333 0 45.407 0 64Z"/><path fill="#777bb3" d="M64 95.167c33.965 0 61.5-13.955 61.5-31.167 0-17.214-27.535-31.167-61.5-31.167S2.5 46.786 2.5 64c0 17.212 27.535 31.167 61.5 31.167Z"/><path d="M34.772 67.864c2.793 0 4.877-.515 6.196-1.53 1.306-1.006 2.207-2.747 2.68-5.175.44-2.27.272-3.854-.5-4.71-.788-.874-2.493-1.317-5.067-1.317h-4.464l-2.473 12.732zM20.173 83.547a.694.694 0 0 1-.68-.828l6.557-33.738a.695.695 0 0 1 .68-.561h14.134c4.442 0 7.748 1.206 9.827 3.585 2.088 2.39 2.734 5.734 1.917 9.935-.333 1.711-.905 3.3-1.7 4.724a15.818 15.818 0 0 1-3.128 3.92c-1.531 1.432-3.264 2.472-5.147 3.083-1.852.604-4.232.91-7.07.91h-5.724l-1.634 8.408a.695.695 0 0 1-.682.562z"/><path fill="#fff" d="M34.19 55.826h3.891c3.107 0 4.186.682 4.553 1.089.607.674.723 2.097.331 4.112-.439 2.257-1.253 3.858-2.42 4.756-1.194.92-3.138 1.386-5.773 1.386h-2.786l2.205-11.342zm6.674-8.1H26.731a1.39 1.39 0 0 0-1.364 1.123L18.81 82.588a1.39 1.39 0 0 0 1.363 1.653h7.35a1.39 1.39 0 0 0 1.363-1.124l1.525-7.846h5.151c2.912 0 5.364-.318 7.287-.944 1.977-.642 3.796-1.731 5.406-3.237a16.522 16.522 0 0 0 3.259-4.087c.831-1.487 1.429-3.147 1.775-4.931.86-4.423.161-7.964-2.076-10.524-2.216-2.537-5.698-3.823-10.349-3.823zM30.301 68.557h4.471c2.963 0 5.17-.557 6.62-1.675 1.451-1.116 2.428-2.98 2.938-5.591.485-2.508.264-4.277-.665-5.308-.931-1.03-2.791-1.546-5.584-1.546h-5.036l-2.743 14.12m10.563-19.445c4.252 0 7.353 1.117 9.303 3.348 1.95 2.232 2.536 5.347 1.76 9.346-.322 1.648-.863 3.154-1.625 4.518-.764 1.366-1.76 2.614-2.991 3.747-1.468 1.373-3.097 2.352-4.892 2.935-1.794.584-4.08.875-6.857.875h-6.296l-1.743 8.97h-7.35l6.558-33.739h14.133"/><path d="M69.459 74.577a.694.694 0 0 1-.682-.827l2.9-14.928c.277-1.42.209-2.438-.19-2.87-.245-.263-.979-.704-3.15-.704h-5.256l-3.646 18.768a.695.695 0 0 1-.683.56h-7.29a.695.695 0 0 1-.683-.826l6.558-33.739a.695.695 0 0 1 .682-.561h7.29a.695.695 0 0 1 .683.826L64.41 48.42h5.653c4.307 0 7.227.758 8.928 2.321 1.733 1.593 2.275 4.14 1.608 7.573l-3.051 15.702a.695.695 0 0 1-.682.56h-7.407z"/><path fill="#fff" d="M65.31 38.755h-7.291a1.39 1.39 0 0 0-1.364 1.124l-6.557 33.738a1.39 1.39 0 0 0 1.363 1.654h7.291a1.39 1.39 0 0 0 1.364-1.124l3.537-18.205h4.682c2.168 0 2.624.463 2.641.484.132.14.305.795.019 2.264l-2.9 14.927a1.39 1.39 0 0 0 1.364 1.654h7.408a1.39 1.39 0 0 0 1.363-1.124l3.051-15.7c.715-3.686.103-6.45-1.82-8.217-1.836-1.686-4.91-2.505-9.398-2.505h-4.81l1.421-7.315a1.39 1.39 0 0 0-1.364-1.655zm0 1.39-1.743 8.968h6.496c4.087 0 6.907.714 8.457 2.14 1.553 1.426 2.017 3.735 1.398 6.93l-3.052 15.699h-7.407l2.901-14.928c.33-1.698.208-2.856-.365-3.474-.573-.617-1.793-.926-3.658-.926h-5.829l-3.756 19.327H51.46l6.558-33.739h7.292z"/><path d="M92.136 67.864c2.793 0 4.878-.515 6.198-1.53 1.304-1.006 2.206-2.747 2.679-5.175.44-2.27.273-3.854-.5-4.71-.788-.874-2.493-1.317-5.067-1.317h-4.463l-2.475 12.732zM77.54 83.547a.694.694 0 0 1-.682-.828l6.557-33.738a.695.695 0 0 1 .682-.561H98.23c4.442 0 7.748 1.206 9.826 3.585 2.089 2.39 2.734 5.734 1.917 9.935a15.878 15.878 0 0 1-1.699 4.724 15.838 15.838 0 0 1-3.128 3.92c-1.53 1.432-3.265 2.472-5.147 3.083-1.852.604-4.232.91-7.071.91h-5.723l-1.633 8.408a.695.695 0 0 1-.683.562z"/><path fill="#fff" d="M91.555 55.826h3.891c3.107 0 4.186.682 4.552 1.089.61.674.724 2.097.333 4.112-.44 2.257-1.254 3.858-2.421 4.756-1.195.92-3.139 1.386-5.773 1.386h-2.786l2.204-11.342zm6.674-8.1H84.096a1.39 1.39 0 0 0-1.363 1.123l-6.558 33.739a1.39 1.39 0 0 0 1.364 1.653h7.35a1.39 1.39 0 0 0 1.363-1.124l1.525-7.846h5.15c2.911 0 5.364-.318 7.286-.944 1.978-.642 3.797-1.731 5.408-3.238a16.52 16.52 0 0 0 3.258-4.086c.832-1.487 1.428-3.147 1.775-4.931.86-4.423.162-7.964-2.076-10.524-2.216-2.537-5.697-3.823-10.35-3.823zM87.666 68.557h4.47c2.964 0 5.17-.557 6.622-1.675 1.45-1.116 2.428-2.98 2.936-5.591.487-2.508.266-4.277-.665-5.308-.93-1.03-2.791-1.546-5.583-1.546h-5.035Zm10.563-19.445c4.251 0 7.354 1.117 9.303 3.348 1.95 2.232 2.537 5.347 1.759 9.346-.32 1.648-.862 3.154-1.624 4.518-.763 1.366-1.76 2.614-2.992 3.747-1.467 1.373-3.097 2.352-4.892 2.935-1.793.584-4.078.875-6.856.875h-6.295l-1.745 8.97h-7.35l6.558-33.739h14.133"/><defs><radialGradient id="php-a" cx="0" cy="0" r="1" gradientTransform="matrix(84.04136 0 0 84.04136 38.426 42.169)" gradientUnits="userSpaceOnUse"><stop stop-color="#AEB2D5"/><stop offset=".3" stop-color="#AEB2D5"/><stop offset=".75" stop-color="#484C89"/><stop offset="1" stop-color="#484C89"/></radialGradient></defs></symbol><symbol id="i-mysql" viewBox="0 0 128 128"><path fill="#00618A" d="M117.688 98.242c-6.973-.191-12.297.461-16.852 2.379-1.293.547-3.355.559-3.566 2.18.711.746.82 1.859 1.387 2.777 1.086 1.754 2.922 4.113 4.559 5.352 1.789 1.348 3.633 2.793 5.551 3.961 3.414 2.082 7.223 3.27 10.504 5.352 1.938 1.23 3.859 2.777 5.75 4.164.934.684 1.563 1.75 2.773 2.18v-.195c-.637-.812-.801-1.93-1.387-2.777l-2.578-2.578c-2.52-3.344-5.719-6.281-9.117-8.719-2.711-1.949-8.781-4.578-9.91-7.73l-.199-.199c1.922-.219 4.172-.914 5.949-1.391 2.98-.797 5.645-.59 8.719-1.387l4.164-1.187v-.793c-1.555-1.594-2.664-3.707-4.359-5.152-4.441-3.781-9.285-7.555-14.273-10.703-2.766-1.746-6.184-2.883-9.117-4.363-.988-.496-2.719-.758-3.371-1.586-1.539-1.961-2.379-4.449-3.566-6.738-2.488-4.793-4.93-10.023-7.137-15.066-1.504-3.437-2.484-6.828-4.359-9.91-9-14.797-18.687-23.73-33.695-32.508-3.195-1.867-7.039-2.605-11.102-3.57l-6.543-.395c-1.332-.555-2.715-2.184-3.965-2.977C16.977 3.52 4.223-3.312.539 5.672-1.785 11.34 4.016 16.871 6.09 19.746c1.457 2.012 3.32 4.273 4.359 6.539.688 1.492.805 2.984 1.391 4.559 1.438 3.883 2.695 8.109 4.559 11.695.941 1.816 1.98 3.727 3.172 5.352.727.996 1.98 1.438 2.18 2.973-1.227 1.715-1.297 4.375-1.984 6.543-3.098 9.77-1.926 21.91 2.578 29.137 1.383 2.223 4.641 6.98 9.117 5.156 3.918-1.598 3.043-6.539 4.164-10.902.254-.988.098-1.715.594-2.379v.199l3.57 7.133c2.641 4.254 7.324 8.699 11.297 11.699 2.059 1.555 3.68 4.242 6.344 5.152v-.199h-.199c-.516-.805-1.324-1.137-1.98-1.781-1.551-1.523-3.277-3.414-4.559-5.156-3.613-4.902-6.805-10.27-9.711-15.855-1.391-2.668-2.598-5.609-3.77-8.324-.453-1.047-.445-2.633-1.387-3.172-1.281 1.988-3.172 3.598-4.164 5.945-1.582 3.754-1.789 8.336-2.375 13.082-.348.125-.195.039-.398.199-2.762-.668-3.73-3.508-4.758-5.949-2.594-6.164-3.078-16.09-.793-23.191.59-1.836 3.262-7.617 2.18-9.316-.516-1.691-2.219-2.672-3.172-3.965-1.18-1.598-2.355-3.703-3.172-5.551-2.125-4.805-3.113-10.203-5.352-15.062-1.07-2.324-2.875-4.676-4.359-6.738-1.645-2.289-3.484-3.977-4.758-6.742-.453-.984-1.066-2.559-.398-3.566.215-.684.516-.969 1.191-1.191 1.148-.887 4.352.297 5.547.793 3.18 1.32 5.832 2.578 8.527 4.363 1.289.855 2.598 2.512 4.16 2.973h1.785c2.789.641 5.914.195 8.523.988 4.609 1.402 8.738 3.582 12.488 5.949 11.422 7.215 20.766 17.48 27.156 29.734 1.027 1.973 1.473 3.852 2.379 5.945 1.824 4.219 4.125 8.559 5.941 12.688 1.816 4.113 3.582 8.27 6.148 11.695 1.348 1.801 6.551 2.766 8.918 3.766 1.66.699 4.379 1.43 5.949 2.379 3 1.809 5.906 3.965 8.723 5.945 1.402.992 5.73 3.168 5.945 4.957zm-88.605-75.52c-1.453-.027-2.48.156-3.566.395v.199h.195c.695 1.422 1.918 2.34 2.777 3.566l1.98 4.164.199-.195c1.227-.867 1.789-2.25 1.781-4.363-.492-.52-.562-1.164-.992-1.785-.562-.824-1.66-1.289-2.375-1.98zm0 0"/></symbol><symbol id="i-postgresql" viewBox="0 0 128 128"><path d="M93.809 92.112c.785-6.533.55-7.492 5.416-6.433l1.235.108c3.742.17 8.637-.602 11.513-1.938 6.191-2.873 9.861-7.668 3.758-6.409-13.924 2.873-14.881-1.842-14.881-1.842 14.703-21.815 20.849-49.508 15.543-56.287-14.47-18.489-39.517-9.746-39.936-9.52l-.134.025c-2.751-.571-5.83-.912-9.289-.968-6.301-.104-11.082 1.652-14.709 4.402 0 0-44.683-18.409-42.604 23.151.442 8.841 12.672 66.898 27.26 49.362 5.332-6.412 10.484-11.834 10.484-11.834 2.558 1.699 5.622 2.567 8.834 2.255l.249-.212c-.078.796-.044 1.575.099 2.497-3.757 4.199-2.653 4.936-10.166 6.482-7.602 1.566-3.136 4.355-.221 5.084 3.535.884 11.712 2.136 17.238-5.598l-.22.882c1.474 1.18 1.375 8.477 1.583 13.69.209 5.214.558 10.079 1.621 12.948 1.063 2.868 2.317 10.256 12.191 8.14 8.252-1.764 14.561-4.309 15.136-27.985"/><path d="M75.458 125.256c-4.367 0-7.211-1.689-8.938-3.32-2.607-2.46-3.641-5.629-4.259-7.522l-.267-.79c-1.244-3.358-1.666-8.193-1.916-14.419-.038-.935-.064-1.898-.093-2.919-.021-.747-.047-1.684-.085-2.664a18.8 18.8 0 01-4.962 1.568c-3.079.526-6.389.356-9.84-.507-2.435-.609-4.965-1.871-6.407-3.82-4.203 3.681-8.212 3.182-10.396 2.453-3.853-1.285-7.301-4.896-10.542-11.037-2.309-4.375-4.542-10.075-6.638-16.943-3.65-11.96-5.969-24.557-6.175-28.693C4.292 23.698 7.777 14.44 15.296 9.129 27.157.751 45.128 5.678 51.68 7.915c4.402-2.653 9.581-3.944 15.433-3.851 3.143.051 6.136.327 8.916.823 2.9-.912 8.628-2.221 15.185-2.139 12.081.144 22.092 4.852 28.949 13.615 4.894 6.252 2.474 19.381.597 26.651-2.642 10.226-7.271 21.102-12.957 30.57 1.544.011 3.781-.174 6.961-.831 6.274-1.295 8.109 2.069 8.607 3.575 1.995 6.042-6.677 10.608-9.382 11.864-3.466 1.609-9.117 2.589-13.745 2.377l-.202-.013-1.216-.107-.12 1.014-.116.991c-.311 11.999-2.025 19.598-5.552 24.619-3.697 5.264-8.835 6.739-13.361 7.709-1.544.33-2.947.474-4.219.474zm-9.19-43.671c2.819 2.256 3.066 6.501 3.287 14.434.028.99.054 1.927.089 2.802.106 2.65.355 8.855 1.327 11.477.137.371.26.747.39 1.146 1.083 3.316 1.626 4.979 6.309 3.978 3.931-.843 5.952-1.599 7.534-3.851 2.299-3.274 3.585-9.86 3.821-19.575l4.783.116-4.75-.57.14-1.186c.455-3.91.783-6.734 3.396-8.602 2.097-1.498 4.486-1.353 6.389-1.01-2.091-1.58-2.669-3.433-2.823-4.193l-.399-1.965 1.121-1.663c6.457-9.58 11.781-21.354 14.609-32.304 2.906-11.251 2.02-17.226 1.134-18.356-11.729-14.987-32.068-8.799-34.192-8.097l-.359.194-1.8.335-.922-.191c-2.542-.528-5.366-.82-8.393-.869-4.756-.08-8.593 1.044-11.739 3.431l-2.183 1.655-2.533-1.043c-5.412-2.213-21.308-6.662-29.696-.721-4.656 3.298-6.777 9.76-6.305 19.207.156 3.119 2.275 14.926 5.771 26.377 4.831 15.825 9.221 21.082 11.054 21.693.32.108 1.15-.537 1.976-1.529a270.708 270.708 0 0110.694-12.07l2.77-2.915 3.349 2.225c1.35.897 2.839 1.406 4.368 1.502l7.987-6.812-1.157 11.808c-.026.265-.039.626.065 1.296l.348 2.238-1.51 1.688-.174.196 4.388 2.025 1.836-2.301z"/><path fill="#336791" d="M115.731 77.44c-13.925 2.873-14.882-1.842-14.882-1.842 14.703-21.816 20.849-49.51 15.545-56.287C101.924.823 76.875 9.566 76.457 9.793l-.135.024c-2.751-.571-5.83-.911-9.291-.967-6.301-.103-11.08 1.652-14.707 4.402 0 0-44.684-18.408-42.606 23.151.442 8.842 12.672 66.899 27.26 49.363 5.332-6.412 10.483-11.834 10.483-11.834 2.559 1.699 5.622 2.567 8.833 2.255l.25-.212c-.078.796-.042 1.575.1 2.497-3.758 4.199-2.654 4.936-10.167 6.482-7.602 1.566-3.136 4.355-.22 5.084 3.534.884 11.712 2.136 17.237-5.598l-.221.882c1.473 1.18 2.507 7.672 2.334 13.557-.174 5.885-.29 9.926.871 13.082 1.16 3.156 2.316 10.256 12.192 8.14 8.252-1.768 12.528-6.351 13.124-13.995.422-5.435 1.377-4.631 1.438-9.49l.767-2.3c.884-7.367.14-9.743 5.225-8.638l1.235.108c3.742.17 8.639-.602 11.514-1.938 6.19-2.871 9.861-7.667 3.758-6.408z"/><path fill="#fff" d="M75.957 122.307c-8.232 0-10.84-6.519-11.907-9.185-1.562-3.907-1.899-19.069-1.551-31.503a1.59 1.59 0 011.64-1.55 1.594 1.594 0 011.55 1.639c-.401 14.341.168 27.337 1.324 30.229 1.804 4.509 4.54 8.453 12.275 6.796 7.343-1.575 10.093-4.359 11.318-11.46.94-5.449 2.799-20.951 3.028-24.01a1.593 1.593 0 011.71-1.472 1.597 1.597 0 011.472 1.71c-.239 3.185-2.089 18.657-3.065 24.315-1.446 8.387-5.185 12.191-13.794 14.037-1.463.313-2.792.453-4 .454zM31.321 90.466a6.71 6.71 0 01-2.116-.35c-5.347-1.784-10.44-10.492-15.138-25.885-3.576-11.717-5.842-23.947-6.041-27.922-.589-11.784 2.445-20.121 9.02-24.778 13.007-9.216 34.888-.44 35.813-.062a1.596 1.596 0 01-1.207 2.955c-.211-.086-21.193-8.492-32.768-.285-5.622 3.986-8.203 11.392-7.672 22.011.167 3.349 2.284 15.285 5.906 27.149 4.194 13.742 8.967 22.413 13.096 23.79.648.216 2.62.873 5.439-2.517A245.272 245.272 0 0145.88 73.046a1.596 1.596 0 012.304 2.208c-.048.05-4.847 5.067-10.077 11.359-2.477 2.979-4.851 3.853-6.786 3.853zm69.429-13.445a1.596 1.596 0 01-1.322-2.487c14.863-22.055 20.08-48.704 15.612-54.414-5.624-7.186-13.565-10.939-23.604-11.156-7.433-.16-13.341 1.738-14.307 2.069l-.243.099c-.971.305-1.716-.227-1.997-.849a1.6 1.6 0 01.631-2.025c.046-.027.192-.089.429-.176l-.021.006.021-.007c1.641-.601 7.639-2.4 15.068-2.315 11.108.118 20.284 4.401 26.534 12.388 2.957 3.779 2.964 12.485.019 23.887-3.002 11.625-8.651 24.118-15.497 34.277-.306.457-.81.703-1.323.703zm.76 10.21c-2.538 0-4.813-.358-6.175-1.174-1.4-.839-1.667-1.979-1.702-2.584-.382-6.71 3.32-7.878 5.208-8.411-.263-.398-.637-.866-1.024-1.349-1.101-1.376-2.609-3.26-3.771-6.078-.182-.44-.752-1.463-1.412-2.648-3.579-6.418-11.026-19.773-6.242-26.612 2.214-3.165 6.623-4.411 13.119-3.716C97.6 28.837 88.5 10.625 66.907 10.271c-6.494-.108-11.82 1.889-15.822 5.93-8.96 9.049-8.636 25.422-8.631 25.586a1.595 1.595 0 11-3.19.084c-.02-.727-.354-17.909 9.554-27.916C53.455 9.272 59.559 6.96 66.96 7.081c13.814.227 22.706 7.25 27.732 13.101 5.479 6.377 8.165 13.411 8.386 15.759.165 1.746-1.088 2.095-1.341 2.147l-.576.013c-6.375-1.021-10.465-.312-12.156 2.104-3.639 5.201 3.406 17.834 6.414 23.229.768 1.376 1.322 2.371 1.576 2.985.988 2.396 2.277 4.006 3.312 5.3.911 1.138 1.7 2.125 1.982 3.283.131.23 1.99 2.98 13.021.703 2.765-.57 4.423-.083 4.93 1.45.997 3.015-4.597 6.532-7.694 7.97-2.775 1.29-7.204 2.106-11.036 2.106zm-4.696-4.021c.35.353 2.101.962 5.727.806 3.224-.138 6.624-.839 8.664-1.786 2.609-1.212 4.351-2.567 5.253-3.492l-.5.092c-7.053 1.456-12.042 1.262-14.828-.577a6.162 6.162 0 01-.54-.401c-.302.119-.581.197-.78.253-1.58.443-3.214.902-2.996 5.105zm-45.562 8.915c-1.752 0-3.596-.239-5.479-.71-1.951-.488-5.24-1.957-5.19-4.37.057-2.707 3.994-3.519 5.476-3.824 5.354-1.103 5.703-1.545 7.376-3.67.488-.619 1.095-1.39 1.923-2.314 1.229-1.376 2.572-2.073 3.992-2.073.989 0 1.8.335 2.336.558 1.708.708 3.133 2.42 3.719 4.467.529 1.847.276 3.625-.71 5.006-3.237 4.533-7.886 6.93-13.443 6.93zm-7.222-4.943c.481.372 1.445.869 2.518 1.137 1.631.408 3.213.615 4.705.615 4.546 0 8.196-1.882 10.847-5.594.553-.774.387-1.757.239-2.274-.31-1.083-1.08-2.068-1.873-2.397-.43-.178-.787-.314-1.115-.314-.176 0-.712 0-1.614 1.009a41.146 41.146 0 00-1.794 2.162c-2.084 2.646-3.039 3.544-9.239 4.821-1.513.31-2.289.626-2.674.835zm12.269-7.36a1.596 1.596 0 01-1.575-1.354 8.218 8.218 0 01-.08-.799c-4.064-.076-7.985-1.82-10.962-4.926-3.764-3.927-5.477-9.368-4.699-14.927.845-6.037.529-11.366.359-14.229-.047-.796-.081-1.371-.079-1.769.003-.505.013-1.844 4.489-4.113 1.592-.807 4.784-2.215 8.271-2.576 5.777-.597 9.585 1.976 10.725 7.246 3.077 14.228.244 20.521-1.825 25.117-.385.856-.749 1.664-1.04 2.447l-.257.69c-1.093 2.931-2.038 5.463-1.748 7.354a1.595 1.595 0 01-1.335 1.819l-.244.02zM42.464 42.26l.062 1.139c.176 2.974.504 8.508-.384 14.86-.641 4.585.759 9.06 3.843 12.276 2.437 2.542 5.644 3.945 8.94 3.945h.068c.369-1.555.982-3.197 1.642-4.966l.255-.686c.329-.884.714-1.74 1.122-2.646 1.991-4.424 4.47-9.931 1.615-23.132-.565-2.615-1.936-4.128-4.189-4.627-4.628-1.022-11.525 2.459-12.974 3.837zm9.63-.677c-.08.564 1.033 2.07 2.485 2.271 1.449.203 2.689-.975 2.768-1.539.079-.564-1.033-1.186-2.485-1.388-1.451-.202-2.691.092-2.768.656zm2.818 2.826l-.407-.028c-.9-.125-1.81-.692-2.433-1.518-.219-.29-.576-.852-.505-1.354.101-.736.999-1.177 2.4-1.177.313 0 .639.023.967.069.766.106 1.477.327 2.002.62.91.508.977 1.075.936 1.368-.112.813-1.405 2.02-2.96 2.02zm-2.289-2.732c.045.348.907 1.496 2.029 1.651l.261.018c1.036 0 1.81-.815 1.901-1.082-.096-.182-.762-.634-2.025-.81a5.823 5.823 0 00-.821-.059c-.812 0-1.243.183-1.345.282zm43.605-1.245c.079.564-1.033 2.07-2.484 2.272-1.45.202-2.691-.975-2.771-1.539-.076-.564 1.036-1.187 2.486-1.388 1.45-.203 2.689.092 2.769.655zm-2.819 2.56c-1.396 0-2.601-1.086-2.7-1.791-.115-.846 1.278-1.489 2.712-1.688.316-.044.629-.066.93-.066 1.238 0 2.058.363 2.14.949.053.379-.238.964-.739 1.492-.331.347-1.026.948-1.973 1.079l-.37.025zm.943-3.013c-.276 0-.564.021-.856.061-1.441.201-2.301.779-2.259 1.089.048.341.968 1.332 2.173 1.332l.297-.021c.787-.109 1.378-.623 1.66-.919.443-.465.619-.903.598-1.052-.028-.198-.56-.49-1.613-.49zm3.965 32.843a1.594 1.594 0 01-1.324-2.483c3.398-5.075 2.776-10.25 2.175-15.255-.257-2.132-.521-4.337-.453-6.453.07-2.177.347-3.973.614-5.71.317-2.058.617-4.002.493-6.31a1.595 1.595 0 113.186-.172c.142 2.638-.197 4.838-.525 6.967-.253 1.643-.515 3.342-.578 5.327-.061 1.874.178 3.864.431 5.97.64 5.322 1.365 11.354-2.691 17.411a1.596 1.596 0 01-1.328.708z"/></symbol><symbol id="i-openapi" viewBox="0 0 128 128"><path fill="#91d400" d="M33.826 73.558H.046l.019.491c.018.318.04.632.059.945.006.136.012.272.024.408a62.65 62.65 0 0 0 .248 2.55c0 .041.006.076.012.118.053.431.106.868.171 1.3 0 .005 0 .011.006.016a55.905 55.905 0 0 0 1.742 7.944c.006.012.012.018.012.03a42.296 42.296 0 0 0 .4 1.299c.006.023.019.047.025.07.118.367.248.733.372 1.104.036.09.064.183.1.279.113.313.224.632.342.95.06.141.112.283.167.431.105.26.205.519.306.787.082.193.167.388.248.59.082.2.171.407.254.613.112.248.224.496.33.744.071.154.136.302.201.449.136.294.278.597.42.892l.141.288c.166.344.337.68.508 1.016.03.053.053.106.077.154a54.944 54.944 0 0 0 .62 1.17c.042.076.089.153.13.224l28.849-17.29.106-.065a22.723 22.723 0 0 1-2.108-7.506zm0 0"/><path fill="#91d400" d="m2.74 88.659-1.098.313.012.03zm0 0"/><path fill="#4c5930" d="m42.123 88.988-.076.084-23.794 23.68c.124.112.242.225.366.337.225.201.449.402.674.596.118.101.23.207.348.308.272.23.544.454.816.679.07.065.147.124.218.181a32.759 32.759 0 0 0 1.045.84c.343.265.68.52 1.022.78.018.011.03.017.04.03a55.324 55.324 0 0 0 4.454 2.993c.053.036.106.065.159.101l.874.514c.176.1.36.2.538.307.17.094.335.19.508.283.313.166.62.337.932.496a53.77 53.77 0 0 0 2.758 1.34l.845-2.037 11.97-28.925.041-.106a23.186 23.186 0 0 1-3.738-2.48zm0 0"/><path fill="#68a338" d="M39.65 86.633a25.364 25.364 0 0 1-1.36-1.666 16.94 16.94 0 0 1-.66-.933 24.082 24.082 0 0 1-.62-.957l-28.886 17.32c.45.734.91 1.447 1.382 2.15.018.025.03.054.047.078l.018.024c.012.022.03.045.04.07.007.005.007.005.007.011.042.053.077.106.118.167 0 .006 0 .006.006.01v.006a53.095 53.095 0 0 0 1.589 2.215c.012.018.024.03.03.047.236.302.466.61.701.91a1.355 1.355 0 0 1 .096.118c.248.307.496.614.75.922a4.397 4.397 0 0 1 .176.218c.232.272.461.544.691.809.102.118.207.23.307.343.197.223.396.449.597.672.112.124.23.242.342.366.048.053.101.114.154.167l.443.477.183.183c.266.278.532.55.803.817l23.822-23.711a33.531 33.531 0 0 1-.778-.833Zm0 0"/><path fill="#4c5930" d="M71.23 88.978c-.266.206-.525.413-.797.614l.06.1 17.371 28.7a58.264 58.264 0 0 0 2.374-1.63 57.597 57.597 0 0 0 4.878-4.01l-23.79-23.68Zm0 0"/><path fill="#91d400" d="m85.669 119.756.035-.018zm.035-.018a3.36 3.36 0 0 0 .231-.13l-.006-.006c-.075.048-.148.09-.225.136zm-.035.018-.012.006zm-.059-.059.04.071zm.059.059.035-.018zm-.024.018.006-.006zm.012-.013-.006.008c.006-.007.012-.007.018-.013-.006.006-.006.006-.012.006zm0 0"/><path fill="#91d400" d="M85.704 119.738c.077-.045.154-.082.231-.13-.077.048-.154.089-.231.13zm.225-.136.006.006zm-.302.178.007-.006zm-.287-1.153-.592-.974-16.216-26.792a16.22 16.22 0 0 1-.998.555c-.337.183-.68.348-1.022.514a23.135 23.135 0 0 1-9.861 2.221 23.129 23.129 0 0 1-6.568-.952c-.36-.112-.715-.253-1.074-.378-.36-.129-.726-.236-1.081-.383l-11.958 28.9-.468 1.135-.4.973h-.006l.094.036c.036.019.065.025.1.041h.007c.006 0 .01.006.017.006.284.118.566.22.85.325.36.142.716.278 1.07.408.182.064.36.147.544.206a57.644 57.644 0 0 0 11.562 2.758c.158.018.313.042.465.06l.484.053c.302.035.605.071.91.1l.225.018c.378.035.75.065 1.122.094.124.006.254.012.378.024.331.024.655.04.98.059.2.006.402.012.603.024.26.006.518.017.778.023.372.012.75.012 1.128.018h.266c3.148 0 6.295-.26 9.408-.78l.159-.023c.325-.06.656-.118.987-.177.189-.036.372-.07.56-.113.19-.035.385-.076.58-.118a31.91 31.91 0 0 0 .955-.212l.179-.036a57.145 57.145 0 0 0 13.593-5.05c.283-.146.555-.312.838-.465.333-.183.662-.372.993-.56.23-.13.466-.249.691-.385l.006-.006h.006l.005-.006c.006 0 .006 0 .006-.006l-.041-.07.04.07h.007c.006-.006.012-.006.012-.006.012-.012.024-.018.034-.024.078-.045.155-.088.226-.136zm-43.2-65.04c.26-.213.527-.414.791-.615l-.059-.1-17.367-28.7a52.052 52.052 0 0 0-2.385 1.635 56.258 56.258 0 0 0-4.867 4.005l23.794 23.68zm0 0"/><path fill="#4c5930" d="M16.6 31.389c-.273.272-.525.548-.791.82-.26.272-.533.545-.791.821a57.694 57.694 0 0 0-5.02 6.236c-.16.236-.326.472-.484.71a27.73 27.73 0 0 0-.49.75c-.06.087-.118.18-.177.271A56.085 56.085 0 0 0 .049 69.006a57.802 57.802 0 0 0-.03 1.14C.011 70.524 0 70.902 0 71.28h33.698c0-.378.034-.756.05-1.134.019-.384.025-.762.066-1.14a22.68 22.68 0 0 1 5.08-12.212c.241-.29.513-.567.766-.845.26-.284.497-.573.768-.845zm69.53-8.327a70.192 70.192 0 0 0-1.034-.608c-.177-.101-.348-.201-.526-.296-.177-.1-.348-.194-.525-.295a40.861 40.861 0 0 0-.916-.49c-.047-.024-.094-.047-.14-.076a57.468 57.468 0 0 0-6.078-2.718c-.053-.023-.112-.04-.166-.059a56.732 56.732 0 0 0-12.714-3.178c-.153-.022-.313-.04-.472-.063l-.473-.054a48.005 48.005 0 0 0-1.174-.118 64.437 64.437 0 0 0-1.087-.094c-.141-.006-.283-.018-.424-.024-.308-.023-.627-.041-.934-.06l-.496-.017v33.62a23.558 23.558 0 0 1 5.114 1.11l24.862-24.744a62.16 62.16 0 0 0-2.817-1.836zm0 0"/><path fill="#68a338" d="m27.436 22.962.59.973zm28.103-8.073c-.378.006-.762.006-1.14.023a57.624 57.624 0 0 0-7.12.725c-.054.014-.106.02-.16.03-.331.055-.656.12-.986.179l-.56.106c-.197.04-.39.075-.58.124a55.92 55.92 0 0 0-1.134.248 57.334 57.334 0 0 0-13.6 5.043c-.278.148-.556.317-.832.472-.331.178-.662.367-.998.556-.242.14-.491.272-.74.419h-.004a.245.245 0 0 1-.054.03c-.065.04-.13.07-.195.112l.006.006.585.973 16.806 27.767c.325-.2.662-.378.998-.555a22.903 22.903 0 0 1 8.569-2.615c.378-.042.755-.071 1.14-.095.377-.017.761-.035 1.145-.035V14.865c-.384 0-.762.012-1.146.024zm0 0"/><path fill="#4c5930" d="m113.3 68.51-.053-.904c-.012-.154-.018-.302-.03-.454l-.088-1.064c-.012-.09-.018-.183-.024-.272a80.881 80.881 0 0 0-.13-1.187c-.005-.035-.005-.065-.01-.094 0-.017 0-.03-.007-.048-.053-.423-.106-.85-.172-1.274 0-.018 0-.03-.005-.043a55.59 55.59 0 0 0-1.743-7.93 72.458 72.458 0 0 0-.39-1.258c-.017-.053-.035-.106-.046-.159-.125-.366-.243-.726-.373-1.087-.035-.095-.065-.195-.1-.295a59.416 59.416 0 0 0-.514-1.375c-.101-.26-.201-.52-.302-.774-.082-.208-.165-.409-.247-.61-.083-.2-.172-.394-.254-.595l-.337-.762-.195-.431c-.136-.302-.284-.608-.425-.91-.048-.088-.089-.182-.13-.272-.17-.348-.343-.69-.514-1.033-.024-.047-.047-.094-.075-.142-.197-.378-.392-.756-.597-1.128l-.018-.034a55.872 55.872 0 0 0-3.225-5.21l-24.868 24.75a22.941 22.941 0 0 1 1.11 5.095h33.78zm0 0"/><path fill="#68a338" d="M79.67 71.278c0 .386-.036.763-.054 1.141-.018.378-.024.76-.065 1.139a22.68 22.68 0 0 1-5.08 12.213c-.242.29-.506.567-.766.844-.254.284-.496.574-.768.845l23.828 23.714c.273-.272.525-.55.791-.821.26-.277.532-.549.786-.827a55.883 55.883 0 0 0 4.83-5.952c.06-.083.112-.166.167-.242.177-.254.353-.514.524-.768.154-.23.307-.453.454-.685.072-.112.143-.231.214-.337a56.019 56.019 0 0 0 8.78-27.99c.019-.378.025-.756.037-1.134.005-.378.017-.756.017-1.14zm0 0"/><path fill="#3f3f42" d="M123.376 4.902c-6.167-6.135-16.158-6.135-22.323 0-4.92 4.89-5.9 12.208-2.97 18.082L63.694 57.212c-5.905-2.91-13.258-1.935-18.177 2.96-6.165 6.136-6.16 16.085 0 22.223 6.17 6.135 16.164 6.129 22.329 0a15.656 15.656 0 0 0 2.97-18.09l34.387-34.226c5.905 2.917 13.25 1.936 18.172-2.959a15.654 15.654 0 0 0 0-22.217zm0 0"/></symbol><symbol id="i-google" viewBox="0 0 128 128"><path fill="#fff" d="M44.59 4.21a63.28 63.28 0 004.33 120.9 67.6 67.6 0 0032.36.35 57.13 57.13 0 0025.9-13.46 57.44 57.44 0 0016-26.26 74.33 74.33 0 001.61-33.58H65.27v24.69h34.47a29.72 29.72 0 01-12.66 19.52 36.16 36.16 0 01-13.93 5.5 41.29 41.29 0 01-15.1 0A37.16 37.16 0 0144 95.74a39.3 39.3 0 01-14.5-19.42 38.31 38.31 0 010-24.63 39.25 39.25 0 019.18-14.91A37.17 37.17 0 0176.13 27a34.28 34.28 0 0113.64 8q5.83-5.8 11.64-11.63c2-2.09 4.18-4.08 6.15-6.22A61.22 61.22 0 0087.2 4.59a64 64 0 00-42.61-.38z"/><path fill="#e33629" d="M44.59 4.21a64 64 0 0142.61.37 61.22 61.22 0 0120.35 12.62c-2 2.14-4.11 4.14-6.15 6.22Q95.58 29.23 89.77 35a34.28 34.28 0 00-13.64-8 37.17 37.17 0 00-37.46 9.74 39.25 39.25 0 00-9.18 14.91L8.76 35.6A63.53 63.53 0 0144.59 4.21z"/><path fill="#f8bd00" d="M3.26 51.5a62.93 62.93 0 015.5-15.9l20.73 16.09a38.31 38.31 0 000 24.63q-10.36 8-20.73 16.08a63.33 63.33 0 01-5.5-40.9z"/><path fill="#587dbd" d="M65.27 52.15h59.52a74.33 74.33 0 01-1.61 33.58 57.44 57.44 0 01-16 26.26c-6.69-5.22-13.41-10.4-20.1-15.62a29.72 29.72 0 0012.66-19.54H65.27c-.01-8.22 0-16.45 0-24.68z"/><path fill="#319f43" d="M8.75 92.4q10.37-8 20.73-16.08A39.3 39.3 0 0044 95.74a37.16 37.16 0 0014.08 6.08 41.29 41.29 0 0015.1 0 36.16 36.16 0 0013.93-5.5c6.69 5.22 13.41 10.4 20.1 15.62a57.13 57.13 0 01-25.9 13.47 67.6 67.6 0 01-32.36-.35 63 63 0 01-23-11.59A63.73 63.73 0 018.75 92.4z"/></symbol><symbol id="i-linkedin" viewBox="0 0 128 128"><path fill="currentColor" d="M116 3H12a8.91 8.91 0 00-9 8.8v104.42a8.91 8.91 0 009 8.78h104a8.93 8.93 0 009-8.81V11.77A8.93 8.93 0 00116 3zM39.17 107H21.06V48.73h18.11zm-9-66.21a10.5 10.5 0 1110.49-10.5 10.5 10.5 0 01-10.54 10.48zM107 107H88.89V78.65c0-6.75-.12-15.44-9.41-15.44s-10.87 7.36-10.87 15V107H50.53V48.73h17.36v8h.24c2.42-4.58 8.32-9.41 17.13-9.41C103.6 47.28 107 59.35 107 75z"/></symbol>
+    <symbol id="g-server" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6.5" rx="1.8"/><rect x="3" y="13.5" width="18" height="6.5" rx="1.8"/><path d="M7 7.25h.01M7 16.75h.01M11 7.25h6M11 16.75h6"/></symbol>
+    <symbol id="g-headset" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0116 0v2"/><rect x="3" y="13" width="4" height="6.5" rx="1.6"/><rect x="17" y="13" width="4" height="6.5" rx="1.6"/><path d="M19.5 19.5c0 1.6-2 2.4-5 2.4"/></symbol>
+    <symbol id="g-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5 15V6.2A2.2 2.2 0 017.2 4H16"/></symbol>
+    <symbol id="g-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="g-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9.5" rx="2.2"/><path d="M8 11V8a4 4 0 018 0v3"/></symbol>
+    <symbol id="g-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <linearGradient id="lg" gradientUnits="userSpaceOnUse" x1="0" y1="166" x2="0" y2="36"><stop offset="0" style="stop-color:var(--a1)"/><stop offset="1" style="stop-color:var(--a2)"/></linearGradient>
+  </defs>
+</svg>
+
+<div class="bg" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="dots"></div><div class="grain"></div></div>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top"><b>VE</b><span>Vladimir Estrada</span></a>
+    <nav class="links" aria-label="Secciones">
+      <a href="#stack">/stack</a><a href="#experiencia">/experiencia</a><a href="#proyectos">/proyectos</a><a href="#contacto">/contacto</a>
+    </nav>
+    <a class="btn" href="#contacto">Contacto</a>
+  </div>
+  <i class="progress" id="progress"></i>
+</header>
+
+<main class="wrap" id="top">
+
+  <div class="grid hero-grid">
+    <section class="card hero">
+      <div class="hero-top">
+        <span class="pill"><i class="dot"></i>Abierto a oportunidades remotas</span>
+        <span class="mono muted" style="font-size:.78rem">Barranquilla, Colombia</span>
+      </div>
+      <p class="eyebrow">Desarrollador backend</p>
+      <h1>Vladimir<br><span class="grad">Estrada</span></h1>
+      <p class="lede">Desarrollo <b>APIs y servicios</b> en Java, JavaScript, PHP y Python, con bases de datos MySQL y PostgreSQL. También administro servidores, máquinas virtuales y Google Workspace.</p>
+      <div class="cta">
+        <a class="btn" href="#contacto">Escríbeme <svg class="gl" aria-hidden="true"><use href="#g-arrow"/></svg></a>
+        <a class="btn ghost" href="https://www.linkedin.com/in/vladimir-estrada-235485240/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-linkedin"/></svg> LinkedIn</a>
+      </div>
+    </section>
+
+    <aside class="card photo" aria-label="Foto de perfil rodeada por las tecnologías que uso">
+      <span class="cap">10°57′N · 74°48′O</span>
+      <div class="orbit" id="orbit">
+        <div class="ring rev" style="--r:42cqw;--t:80s;--s:11cqw">
+          <span class="sat" style="--a:30deg"><span class="sat-in" style="--a:30deg;--t:80s"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-mysql"/></svg></span></span>
+          <span class="sat" style="--a:150deg"><span class="sat-in" style="--a:150deg;--t:80s"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-postgresql"/></svg></span></span>
+          <span class="sat" style="--a:270deg"><span class="sat-in" style="--a:270deg;--t:80s"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-nodejs"/></svg></span></span>
+        </div>
+        <div class="ring" style="--r:30cqw;--t:56s;--s:10cqw">
+          <span class="sat" style="--a:0deg"><span class="sat-in" style="--a:0deg;--t:56s"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-java"/></svg></span></span>
+          <span class="sat" style="--a:90deg"><span class="sat-in" style="--a:90deg;--t:56s"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-javascript"/></svg></span></span>
+          <span class="sat" style="--a:180deg"><span class="sat-in" style="--a:180deg;--t:56s"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-php"/></svg></span></span>
+          <span class="sat" style="--a:270deg"><span class="sat-in" style="--a:270deg;--t:56s"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-python"/></svg></span></span>
+        </div>
+        <div class="fw"><div class="frame"><span class="ve">VE</span><img id="foto" alt="Vladimir Estrada" hidden></div></div>
+      </div>
+      <span class="cap">Puerta de Oro de Colombia</span>
+    </aside>
+
+    <section class="card clock" aria-label="Hora en Barranquilla">
+      <p class="k">Ahora en Barranquilla</p>
+      <p class="time" id="clock" aria-live="off">--<span>:</span>--<span>:</span>--</p>
+      <p class="sub"><span id="today">Hora de Colombia</span> · UTC−5, sin horario de verano</p>
+    </section>
+
+    <section class="card years" aria-label="Años de experiencia">
+      <p class="k">En desarrollo y sistemas</p>
+      <p class="big"><span id="yrs">4</span><small>años</small><span id="mos">9</span><small>meses</small></p>
+      <p class="sub">desde enero de 2022, en dos empresas</p>
+    </section>
+  </div>
+
+  <div class="mq" aria-label="Tecnologías">
+    <ul class="mq-track"><li class="mq-item"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-java"/></svg><span>Java</span></li><li class="mq-item"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-javascript"/></svg><span>JavaScript</span></li><li class="mq-item"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-nodejs"/></svg><span>Node.js</span></li><li class="mq-item"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-python"/></svg><span>Python</span></li><li class="mq-item"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-php"/></svg><span>PHP</span></li><li class="mq-item"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-java"/></svg><span>Java</span></li><li class="mq-item"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-javascript"/></svg><span>JavaScript</span></li><li class="mq-item"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-nodejs"/></svg><span>Node.js</span></li><li class="mq-item"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-python"/></svg><span>Python</span></li><li class="mq-item"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-php"/></svg><span>PHP</span></li><li class="mq-item" aria-hidden="true"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-java"/></svg><span>Java</span></li><li class="mq-item" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-javascript"/></svg><span>JavaScript</span></li><li class="mq-item" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-nodejs"/></svg><span>Node.js</span></li><li class="mq-item" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-python"/></svg><span>Python</span></li><li class="mq-item" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-php"/></svg><span>PHP</span></li><li class="mq-item" aria-hidden="true"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-java"/></svg><span>Java</span></li><li class="mq-item" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-javascript"/></svg><span>JavaScript</span></li><li class="mq-item" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-nodejs"/></svg><span>Node.js</span></li><li class="mq-item" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-python"/></svg><span>Python</span></li><li class="mq-item" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-php"/></svg><span>PHP</span></li></ul>
+    <ul class="mq-track rev"><li class="mq-item"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-mysql"/></svg><span>MySQL</span></li><li class="mq-item"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-postgresql"/></svg><span>PostgreSQL</span></li><li class="mq-item"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-openapi"/></svg><span>APIs REST</span></li><li class="mq-item"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg><span>Google Workspace</span></li><li class="mq-item"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-mysql"/></svg><span>MySQL</span></li><li class="mq-item"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-postgresql"/></svg><span>PostgreSQL</span></li><li class="mq-item"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-openapi"/></svg><span>APIs REST</span></li><li class="mq-item"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg><span>Google Workspace</span></li><li class="mq-item" aria-hidden="true"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-mysql"/></svg><span>MySQL</span></li><li class="mq-item" aria-hidden="true"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-postgresql"/></svg><span>PostgreSQL</span></li><li class="mq-item" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-openapi"/></svg><span>APIs REST</span></li><li class="mq-item" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg><span>Google Workspace</span></li><li class="mq-item" aria-hidden="true"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-mysql"/></svg><span>MySQL</span></li><li class="mq-item" aria-hidden="true"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-postgresql"/></svg><span>PostgreSQL</span></li><li class="mq-item" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-openapi"/></svg><span>APIs REST</span></li><li class="mq-item" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg><span>Google Workspace</span></li></ul>
+  </div>
+
+  <section class="sec" id="stack">
+    <div class="sec-head">
+      <p class="ep"><i>GET</i>/stack</p>
+      <h2>Lo que uso para construir</h2>
+      <p>Lenguajes, bases de datos y estilo de API con los que trabajo a diario. El año indica cuándo empecé a usarlos en un empleo.</p>
+    </div>
+    <div class="grid">
+      <article class="card tile s3" style="--c:#F0523A"><span class="glow"></span><div class="tile-top"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-java"/></svg><span class="since">desde 2023</span></div><h3>Java</h3><p>Servicios backend</p></article>
+      <article class="card tile s3" style="--c:#F7DF1E"><span class="glow"></span><div class="tile-top"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-javascript"/></svg><span class="since">desde 2022</span></div><h3>JavaScript</h3><p>APIs y servicios</p></article>
+      <article class="card tile s3" style="--c:#6CC24A"><span class="glow"></span><div class="tile-top"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-nodejs"/></svg><span class="since">desde 2022</span></div><h3>Node.js</h3><p>JavaScript en el servidor</p></article>
+      <article class="card tile s3" style="--c:#3C8CC8"><span class="glow"></span><div class="tile-top"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-python"/></svg><span class="since">2022 · 2023</span></div><h3>Python</h3><p>Servicios y scripts</p></article>
+      <article class="card tile s3" style="--c:#8892BF"><span class="glow"></span><div class="tile-top"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-php"/></svg><span class="since">desde 2023</span></div><h3>PHP</h3><p>Servicios web</p></article>
+      <article class="card tile s3" style="--c:#00A2D6"><span class="glow"></span><div class="tile-top"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-mysql"/></svg><span class="since">desde 2022</span></div><h3>MySQL</h3><p>Base de datos</p></article>
+      <article class="card tile s3" style="--c:#4F8FCB"><span class="glow"></span><div class="tile-top"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-postgresql"/></svg><span class="since">desde 2023</span></div><h3>PostgreSQL</h3><p>Base de datos</p></article>
+      <article class="card tile s3" style="--c:#85EA2D"><span class="glow"></span><div class="tile-top"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-openapi"/></svg><span class="since">desde 2022</span></div><h3>APIs REST</h3><p>Con Clean Code</p></article>
+
+      <article class="card s8" aria-label="Tiempo de uso de cada tecnología">
+        <div class="tl-head">
+          <h3>Tiempo de uso, a escala</h3>
+          <span class="legend"><i class="dot"></i>sigo usándola hoy</span>
+        </div>
+        <div class="axis" aria-hidden="true">
+          <span></span>
+          <div class="years-axis"><span style="left:0">2022</span><span style="left:21.05%">2023</span><span style="left:42.1%">2024</span><span style="left:63.16%">2025</span><span style="left:84.2%">2026</span></div>
+          <span></span>
+        </div>
+        <div class="trow" style="--c:#F7DF1E;--i:0"><div class="tname"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-javascript"/></svg><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-nodejs"/></svg><span>JavaScript · Node.js</span></div><div class="ttrack"><span class="bar on" style="left:0;width:100%"></span></div><div class="tdur">4 a 9 m</div></div>
+        <div class="trow" style="--c:#00A2D6;--i:1"><div class="tname"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-mysql"/></svg><span>MySQL</span></div><div class="ttrack"><span class="bar on" style="left:0;width:100%"></span></div><div class="tdur">4 a 9 m</div></div>
+        <div class="trow" style="--c:#3C8CC8;--i:2"><div class="tname"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-python"/></svg><span>Python</span></div><div class="ttrack"><span class="bar" style="left:0;width:38.6%"></span></div><div class="tdur">1 a 10 m</div></div>
+        <div class="trow" style="--c:#F0523A;--i:3"><div class="tname"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-java"/></svg><span>Java</span></div><div class="ttrack"><span class="bar on" style="left:28.1%;width:71.9%"></span></div><div class="tdur">3 a 5 m</div></div>
+        <div class="trow" style="--c:#8892BF;--i:4"><div class="tname"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-php"/></svg><span>PHP</span></div><div class="ttrack"><span class="bar on" style="left:28.1%;width:71.9%"></span></div><div class="tdur">3 a 5 m</div></div>
+        <div class="trow" style="--c:#4F8FCB;--i:5"><div class="tname"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-postgresql"/></svg><span>PostgreSQL</span></div><div class="ttrack"><span class="bar on" style="left:28.1%;width:71.9%"></span></div><div class="tdur">3 a 5 m</div></div>
+        <p class="note">Escala en meses, de enero de 2022 a octubre de 2026. Cuenta solo el uso en trabajos.</p>
+      </article>
+
+      <article class="card s4 api" aria-label="Resumen en formato de respuesta de API">
+        <div class="req"><span class="m-get">GET</span><span>/vladimir</span><span class="ok">200 OK</span></div>
+<pre class="json" aria-hidden="true"><span class="ln" style="--n:0">{</span><span class="ln" style="--n:1">  <span class="k2">"nombre"</span>: <span class="s2">"Vladimir Estrada"</span>,</span><span class="ln" style="--n:2">  <span class="k2">"rol"</span>: <span class="s2">"backend"</span>,</span><span class="ln" style="--n:3">  <span class="k2">"ciudad"</span>: <span class="s2">"Barranquilla"</span>,</span><span class="ln" style="--n:4">  <span class="k2">"modalidad"</span>: <span class="s2">"remoto"</span>,</span><span class="ln" style="--n:5">  <span class="k2">"lenguajes"</span>: [<span class="s2">"Java"</span>, <span class="s2">"JavaScript"</span>,</span><span class="ln" style="--n:6">    <span class="s2">"PHP"</span>, <span class="s2">"Python"</span>],</span><span class="ln" style="--n:7">  <span class="k2">"bases_de_datos"</span>: [<span class="s2">"MySQL"</span>,</span><span class="ln" style="--n:8">    <span class="s2">"PostgreSQL"</span>],</span><span class="ln" style="--n:9">  <span class="k2">"idiomas"</span>: {<span class="k2">"es"</span>: <span class="s2">"nativo"</span>,</span><span class="ln" style="--n:10">    <span class="k2">"en"</span>: <span class="s2">"B1"</span>},</span><span class="ln" style="--n:11">  <span class="k2">"disponible"</span>: <span class="jv">true</span></span><span class="ln" style="--n:12">}<span class="cur"></span></span></pre>
+        <p class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Vladimir Estrada, desarrollador backend en Barranquilla, modalidad remota. Lenguajes: Java, JavaScript, PHP y Python. Bases de datos: MySQL y PostgreSQL. Español nativo e inglés B1.</p>
+      </article>
+    </div>
+
+    <div class="grid" style="margin-top:14px">
+      <article class="card do s3t"><span class="ico"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-openapi"/></svg></span><h3>APIs y servicios</h3><p>Diseño y mantengo APIs REST con Clean Code, en Java, JavaScript y PHP.</p></article>
+      <article class="card do s3t"><span class="ico"><svg class="gl" aria-hidden="true"><use href="#g-server"/></svg></span><h3>Servidores y VMs</h3><p>Mantenimiento de servidores, máquinas virtuales y equipos de la empresa.</p></article>
+      <article class="card do s3t"><span class="ico"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg></span><h3>Google Workspace</h3><p>Administro correo, Drive y permisos, y limpio los archivos que ya no se usan.</p></article>
+      <article class="card do s3t"><span class="ico"><svg class="gl" aria-hidden="true"><use href="#g-headset"/></svg></span><h3>Soporte técnico</h3><p>Atención de nivel I y II, y capacitación en TI para el equipo.</p></article>
+    </div>
+  </section>
+
+  <section class="sec" id="experiencia">
+    <div class="sec-head">
+      <p class="ep"><i>GET</i>/experiencia</p>
+      <h2>Dónde he trabajado</h2>
+    </div>
+    <div class="grid">
+      <article class="card job s6">
+        <div class="job-top"><span class="pill period"><i class="dot"></i>may 2023 → hoy</span><span class="period">3 años 5 meses</span></div>
+        <div><h3>Auxiliar de Sistemas y Desarrollador Backend</h3><p class="co">Suministros y Dotaciones Colombia S.A.</p></div>
+        <ul class="ticks">
+          <li>Servicios en Java, JavaScript y PHP sobre MySQL y PostgreSQL.</li>
+          <li>Mantenimiento de servidores, máquinas virtuales y equipos.</li>
+          <li>Administración de Google Workspace: correo, Drive y permisos.</li>
+          <li>Soporte técnico nivel I y II, y capacitación en TI.</li>
+        </ul>
+        <div class="chips"><span class="chip"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-java"/></svg>Java</span><span class="chip"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-javascript"/></svg>JavaScript</span><span class="chip"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-php"/></svg>PHP</span><span class="chip"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-mysql"/></svg>MySQL</span><span class="chip"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-postgresql"/></svg>PostgreSQL</span><span class="chip"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg>Workspace</span></div>
+      </article>
+      <article class="card job s6">
+        <div class="job-top"><span class="pill period">ene 2022 → oct 2023</span><span class="period">1 año 10 meses</span></div>
+        <div><h3>Desarrollador Backend</h3><p class="co">Sistemas Colombia S.A.S.</p></div>
+        <ul class="ticks">
+          <li>APIs REST escritas con Clean Code.</li>
+          <li>Servicios en JavaScript y Python.</li>
+          <li>Consultas y modelos de datos en MySQL.</li>
+        </ul>
+        <div class="chips"><span class="chip"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-openapi"/></svg>APIs REST</span><span class="chip"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-javascript"/></svg>JavaScript</span><span class="chip"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-python"/></svg>Python</span><span class="chip"><svg class="ic lift" aria-hidden="true" focusable="false"><use href="#i-mysql"/></svg>MySQL</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec" id="proyectos">
+    <div class="sec-head">
+      <p class="ep"><i>GET</i>/proyectos</p>
+      <h2>Lo que armo fuera del trabajo</h2>
+    </div>
+    <div class="grid">
+      <article class="card s8 print">
+        <div>
+          <h3>Clean Print</h3>
+          <div class="badge-row"><span class="badge live">En desarrollo</span><span class="badge">Tienda web</span><span class="badge">Impresión 3D</span></div>
+          <p class="lead">Vendo piezas impresas en 3D por MercadoLibre y estoy construyendo la tienda propia.</p>
+          <ul class="ticks">
+            <li>Panel de administración con usuarios y permisos.</li>
+            <li>Pasarela de pagos que recibe pagos nacionales e internacionales.</li>
+            <li>Catálogo de productos y pedidos.</li>
+            <li>Diseño responsive: se ajusta a celulares y tablets.</li>
+          </ul>
+          <div class="print-cta"><a class="btn" href="https://claude.ai/artifact/2aojKYdXTr5NBX4v3AzmHF" target="_blank" rel="noopener">Ver cómo va la tienda <svg class="gl" aria-hidden="true"><use href="#g-arrow"/></svg></a></div>
+        </div>
+        <svg class="printer" viewBox="0 -8 320 196" role="img" aria-label="Animación de una pieza que se imprime capa por capa">
+          <line class="rail" x1="30" y1="-4" x2="30" y2="172"/><line class="rail" x1="290" y1="-4" x2="290" y2="172"/>
+          <rect class="base" x="24" y="173" width="272" height="7" rx="3.5"/>
+          <rect class="bed" x="44" y="166" width="232" height="6" rx="3"/>
+          <rect class="ly l0" x="118.0" y="158.8" width="84.0" height="6.4" rx="2.2"/>
+<rect class="ly l1" x="116.3" y="151.6" width="87.4" height="6.4" rx="2.2"/>
+<rect class="ly l2" x="114.4" y="144.4" width="91.2" height="6.4" rx="2.2"/>
+<rect class="ly l3" x="112.2" y="137.2" width="95.7" height="6.4" rx="2.2"/>
+<rect class="ly l4" x="109.5" y="130.0" width="101.0" height="6.4" rx="2.2"/>
+<rect class="ly l5" x="106.4" y="122.8" width="107.2" height="6.4" rx="2.2"/>
+<rect class="ly l6" x="103.0" y="115.6" width="114.0" height="6.4" rx="2.2"/>
+<rect class="ly l7" x="99.5" y="108.4" width="120.9" height="6.4" rx="2.2"/>
+<rect class="ly l8" x="96.4" y="101.2" width="127.2" height="6.4" rx="2.2"/>
+<rect class="ly l9" x="93.8" y="94.0" width="132.4" height="6.4" rx="2.2"/>
+<rect class="ly l10" x="92.2" y="86.8" width="135.6" height="6.4" rx="2.2"/>
+<rect class="ly l11" x="91.8" y="79.6" width="136.3" height="6.4" rx="2.2"/>
+<rect class="ly l12" x="92.9" y="72.4" width="134.2" height="6.4" rx="2.2"/>
+<rect class="ly l13" x="95.5" y="65.2" width="128.9" height="6.4" rx="2.2"/>
+<rect class="ly l14" x="99.7" y="58.0" width="120.7" height="6.4" rx="2.2"/>
+<rect class="ly l15" x="105.0" y="50.8" width="110.0" height="6.4" rx="2.2"/>
+<rect class="ly l16" x="111.2" y="43.6" width="97.5" height="6.4" rx="2.2"/>
+<rect class="ly l17" x="118.0" y="36.4" width="84.0" height="6.4" rx="2.2"/>
+          <g class="gantry">
+            <rect class="axisx" x="26" y="122" width="268" height="6" rx="3"/>
+            <g class="head"><path class="nozzle" d="M148 128h24v18l-9 10h-6l-9-10z"/><path class="tip" d="M157 152h6l-3 5z"/></g>
+          </g>
+        </svg>
+      </article>
+      <article class="card s4 priv" aria-label="3 proyectos privados: 2 en desarrollo y 1 finalizado con éxito">
+        <div class="priv-head">
+          <p class="num grad" aria-hidden="true">3</p>
+          <div class="priv-txt"><p class="k">Trabajando en</p><h3>proyectos privados</h3><div class="badge-row" style="margin:0"><span class="badge live">2 en desarrollo</span><span class="badge done">1 finalizado con éxito</span></div></div>
+        </div>
+        <ul class="repos" aria-hidden="true">
+          <li class="done" style="--w:70%"><svg class="gl"><use href="#g-check"/></svg><span class="redact"></span><span class="prog full"><i></i></span></li>
+          <li style="--w:52%;--d:0s;--sp:1.9s"><svg class="gl"><use href="#g-lock"/></svg><span class="redact"></span><span class="prog"><i></i></span></li>
+          <li style="--w:82%;--d:-1.3s;--sp:2.1s"><svg class="gl"><use href="#g-lock"/></svg><span class="redact"></span><span class="prog"><i></i></span></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec" id="formacion">
+    <div class="sec-head">
+      <p class="ep"><i>GET</i>/formacion</p>
+      <h2>Estudios e idiomas</h2>
+    </div>
+    <div class="grid">
+      <article class="card edu study s6">
+        <p class="k">2022 → 2024</p>
+        <div><h3>Tecnólogo en Análisis y Desarrollo de Software</h3>
+        <p class="co" style="margin-top:6px">SENA, Colombia</p></div>
+      </article>
+      <article class="card edu s6">
+        <div class="lang"><b>Español</b><span class="mono muted" style="font-size:.78rem">nativo</span></div>
+        <div class="meter" aria-hidden="true"><i style="width:100%"></i></div>
+        <div class="lang" style="margin-top:8px"><b>Inglés</b><span class="mono muted" style="font-size:.78rem">B1 · intermedio</span></div>
+        <div class="cefr" aria-label="Nivel de inglés B1 en la escala A1 a C2"><span>A1</span><span>A2</span><span class="me">B1</span><span>B2</span><span>C1</span><span>C2</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec" id="contacto">
+    <div class="card contact">
+      <div>
+        <p class="ep"><i>POST</i>/contacto</p>
+        <h2>¿Hablamos?</h2>
+        <p>Busco un puesto de desarrollador backend en modalidad remota. Escríbeme y conversamos.</p>
+      </div>
+      <div class="side">
+        <div class="mail"><code id="mail">bladimirjuniore@gmail.com</code><button class="btn ghost" type="button" id="copy"><svg class="gl" aria-hidden="true"><use href="#g-copy"/></svg><span id="copylabel">Copiar</span></button></div>
+        <p class="status" id="status" role="status"></p>
+        <a class="btn" href="https://www.linkedin.com/in/vladimir-estrada-235485240/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-linkedin"/></svg> Ver mi LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <footer><span>Vladimir Estrada · Barranquilla, Colombia</span><span>UTC−5</span></footer>
+</main>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* foco de luz que sigue al cursor en cada tarjeta */
+  document.addEventListener('pointermove', function(e){
+    var t = e.target; var c = t && t.closest ? t.closest('.card') : null;
+    if(!c) return;
+    var r = c.getBoundingClientRect();
+    c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  }, {passive:true});
+
+  /* inclinación suave de la órbita */
+  var photo = document.querySelector('.photo'), orbit = document.getElementById('orbit');
+  if(photo && orbit && fine && !reduce){
+    photo.addEventListener('pointermove', function(e){
+      var r = photo.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      orbit.style.setProperty('--ry', (x * 14).toFixed(1) + 'deg');
+      orbit.style.setProperty('--rx', (-y * 14).toFixed(1) + 'deg');
+    });
+    photo.addEventListener('pointerleave', function(){ orbit.style.setProperty('--rx','0deg'); orbit.style.setProperty('--ry','0deg'); });
+  }
+
+  /* hora de Barranquilla (UTC-5, Colombia no cambia de horario) */
+  var DIAS = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  function pad(n){ return n < 10 ? '0' + n : '' + n; }
+  function bq(){ return new Date(Date.now() - 5 * 3600 * 1000); }
+  function tick(){
+    var d = bq();
+    var el = document.getElementById('clock');
+    if(el) el.innerHTML = pad(d.getUTCHours()) + '<span>:</span>' + pad(d.getUTCMinutes()) + '<span>:</span>' + pad(d.getUTCSeconds());
+    var t = document.getElementById('today');
+    if(t) t.textContent = DIAS[d.getUTCDay()] + ' ' + d.getUTCDate() + ' de ' + MESES[d.getUTCMonth()];
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* tiempo desde enero de 2022 */
+  (function(){
+    var d = bq();
+    var m = (d.getUTCFullYear() - 2022) * 12 + d.getUTCMonth();
+    var y = document.getElementById('yrs'), o = document.getElementById('mos');
+    if(y && m > 0) y.textContent = Math.floor(m / 12);
+    if(o && m > 0) o.textContent = m % 12;
+  })();
+
+  /* barra de avance */
+  var bar = document.getElementById('progress');
+  function prog(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? Math.min(1, Math.max(0, window.scrollY / h)) : 0;
+    if(bar) bar.style.setProperty('--p', p.toFixed(4));
+  }
+  window.addEventListener('scroll', prog, {passive:true}); window.addEventListener('resize', prog); prog();
+
+  /* anclas */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href').slice(1);
+      var t = id === 'top' ? document.body : document.getElementById(id);
+      if(!t) return;
+      e.preventDefault();
+      try{ t.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'}); }catch(err){ t.scrollIntoView(); }
+    });
+  });
+
+  /* copiar correo */
+  var btn = document.getElementById('copy'), mail = document.getElementById('mail');
+  var lab = document.getElementById('copylabel'), st = document.getElementById('status');
+  function selectMail(){
+    try{
+      var r = document.createRange(); r.selectNodeContents(mail);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    }catch(e){}
+    st.textContent = 'Correo seleccionado. Cópialo con Ctrl+C o con mantener pulsado.';
+  }
+  if(btn && mail){
+    btn.addEventListener('click', function(){
+      var text = mail.textContent.trim();
+      try{
+        navigator.clipboard.writeText(text).then(function(){
+          lab.textContent = 'Copiado'; st.textContent = 'Correo copiado al portapapeles.';
+          setTimeout(function(){ lab.textContent = 'Copiar'; st.textContent = ''; }, 2200);
+        }, selectMail);
+      }catch(e){ selectMail(); }
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
